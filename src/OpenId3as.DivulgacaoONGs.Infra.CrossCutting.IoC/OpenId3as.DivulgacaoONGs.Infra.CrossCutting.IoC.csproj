@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <RootNamespace>OpenId3as.DivulgacaoONGs.Infra.CrossCutting.IoC</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OpenId3as.DivulgacaoONGs.Application\OpenId3as.DivulgacaoONGs.Application.csproj" />
+    <ProjectReference Include="..\OpenId3as.DivulgacaoONGs.Domain\OpenId3as.DivulgacaoONGs.Domain.csproj" />
+    <ProjectReference Include="..\OpenId3as.DivulgacaoONGs.Infra.Data\OpenId3as.DivulgacaoONGs.Infra.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions">
+      <HintPath>..\..\..\..\..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.extensions.dependencyinjection.abstractions\2.2.0-preview1-35029\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

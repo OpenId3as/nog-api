@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>OpenId3as.DivulgacaoONGs.Application</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="7.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OpenId3as.DivulgacaoONGs.Domain\OpenId3as.DivulgacaoONGs.Domain.csproj" />
+    <ProjectReference Include="..\OpenId3as.DivulgacaoONGs.Infra.Data\OpenId3as.DivulgacaoONGs.Infra.Data.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>OpenId3as.DivulgacaoONGs.Domain</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Interfaces\Services\ICollaboratorAddressService.cs" />
+    <Compile Remove="Interfaces\Services\ICollaboratorPhoneService.cs" />
+    <Compile Remove="Interfaces\Services\IInstitutionAddressService.cs" />
+    <Compile Remove="Interfaces\Services\IInstitutionPhoneService.cs" />
+    <Compile Remove="Interfaces\Services\IVolunteerAddressService.cs" />
+    <Compile Remove="Interfaces\Services\IVolunteerPhoneService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0" />
+  </ItemGroup>
+
+</Project>

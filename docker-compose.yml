@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  openid3as.divulgacaoongs.services.rest.coreapi:
+    image: openid3as.divulgacaoongs.services.rest.coreapi
+    build:
+      context: ./src/OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI
+      dockerfile: Dockerfile

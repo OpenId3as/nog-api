@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  openid3as.divulgacaoongs.services.rest.coreapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"

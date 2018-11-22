@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using OpenId3as.DivulgacaoONGs.Application.Interfaces;
+using IPageApp = OpenId3as.DivulgacaoONGs.Application.Interfaces.Page;
 using OpenId3as.DivulgacaoONGs.Application.ViewModels.Collaborators;
+using PageVM = OpenId3as.DivulgacaoONGs.Application.ViewModels.Page;
 using System;
 using System.Collections.Generic;
 
@@ -11,11 +13,17 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
     public class CollaboratorController : BaseController
     {
         private readonly ICollaboratorAppService _collaboratorAppService;
+        private readonly IPageApp.ICollaboratorAppService _collaboratorPageAppService;
         private readonly IDistributedCache _cache;
-        public CollaboratorController(IDistributedCache cache, ICollaboratorAppService collaboratorAppService)
+
+        public CollaboratorController(IDistributedCache cache,
+            ICollaboratorAppService collaboratorAppService,
+            IPageApp.ICollaboratorAppService collaboratorPageAppService
+            )
         {
             _cache = cache;
             _collaboratorAppService = collaboratorAppService;
+            _collaboratorPageAppService = collaboratorPageAppService;
         }
 
         [HttpGet]

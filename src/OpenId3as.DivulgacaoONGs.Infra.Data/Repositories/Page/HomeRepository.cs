@@ -4,9 +4,9 @@ using OpenId3as.DivulgacaoONGs.Infra.Data.Context.Mongo;
 
 namespace OpenId3as.DivulgacaoONGs.Infra.Data.Repositories.Page
 {
-    public class LogoRepository : MongoRepository<Logo>, ILogoRepository
+    public class HomeRepository : MongoRepository<Home>, IHomeRepository
     {
-        public LogoRepository(NOGContext context)
+        public HomeRepository(NOGContext context)
             : base(context)
         {
 

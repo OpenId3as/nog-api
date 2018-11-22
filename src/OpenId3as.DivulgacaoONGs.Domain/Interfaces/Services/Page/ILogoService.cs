@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace OpenId3as.DivulgacaoONGs.Domain.Interfaces.Services
+namespace OpenId3as.DivulgacaoONGs.Domain.Interfaces.Services.Page
 {
     public interface ILogoService : IDisposable
     {

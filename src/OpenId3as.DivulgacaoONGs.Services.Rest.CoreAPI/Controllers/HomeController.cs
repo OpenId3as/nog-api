@@ -8,44 +8,44 @@ using System.Collections.Generic;
 namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
 {
     [Route("api/[controller]")]
-    public class LogoController : BaseController
+    public class HomeController : Controller
     {
-        private readonly ILogoAppService _logoAppService;
+        private readonly IHomeAppService _homeAppService;
         private readonly IDistributedCache _cache;
-        public LogoController(IDistributedCache cache, ILogoAppService logoAppService)
+        public HomeController(IDistributedCache cache, IHomeAppService homeAppService)
         {
             _cache = cache;
-            _logoAppService = logoAppService;
+            _homeAppService = homeAppService;
         }
 
         [HttpGet]
-        public IEnumerable<LogoViewModel> Get()
+        public IEnumerable<HomeViewModel> Get()
         {
-            return _logoAppService.GetAll();
+            return _homeAppService.GetAll();
         }
 
         [HttpGet("{id}")]
-        public LogoViewModel Get(Int64 id)
+        public HomeViewModel Get(Int64 id)
         {
-            return _logoAppService.GetById(id);
+            return _homeAppService.GetById(id);
         }
 
         [HttpPost]
-        public LogoViewModel Post([FromBody]LogoViewModel logo)
+        public HomeViewModel Post([FromBody]HomeViewModel home)
         {
-            return _logoAppService.Add(logo);
+            return _homeAppService.Add(home);
         }
 
         [HttpPut("{id}")]
-        public LogoViewModel Put(int id, [FromBody]LogoViewModel logo)
+        public HomeViewModel Put(Int64 id, [FromBody]HomeViewModel home)
         {
-            return _logoAppService.Update(logo);
+            return _homeAppService.Update(home);
         }
 
         [HttpDelete("{id}")]
         public void Delete(Int64 id)
         {
-            _logoAppService.Delete(id);
+            _homeAppService.Delete(id);
         }
     }
 }

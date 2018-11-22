@@ -9,22 +9,22 @@ using System.Collections.Generic;
 
 namespace OpenId3as.DivulgacaoONGs.Application.Services.Page
 {
-    public class LogoAppService : ILogoAppService
+    public class HomeAppService : IHomeAppService
     {
         private readonly IMapper _mapper;
-        private readonly ILogoService _logoService;
+        private readonly IHomeService _logoService;
         private readonly IUnitOfWork _uow;
 
-        public LogoAppService(IMapper mapper, ILogoService logoService, IUnitOfWork uow)
+        public HomeAppService(IMapper mapper, IHomeService logoService, IUnitOfWork uow)
         {
             _mapper = mapper;
             _logoService = logoService;
             _uow = uow;
         }
 
-        public LogoViewModel Add(LogoViewModel logoViewModel)
+        public HomeViewModel Add(HomeViewModel logoViewModel)
         {
-            var logo = _mapper.Map<LogoViewModel, Logo>(logoViewModel);
+            var logo = _mapper.Map<HomeViewModel, Home>(logoViewModel);
             _logoService.Add(logo);
             return logoViewModel;
         }
@@ -40,19 +40,19 @@ namespace OpenId3as.DivulgacaoONGs.Application.Services.Page
             GC.SuppressFinalize(this);
         }
 
-        public IEnumerable<LogoViewModel> GetAll()
+        public IEnumerable<HomeViewModel> GetAll()
         {
-            return _mapper.Map<IEnumerable<Logo>, IEnumerable<LogoViewModel>>(_logoService.GetAll());
+            return _mapper.Map<IEnumerable<Home>, IEnumerable<HomeViewModel>>(_logoService.GetAll());
         }
 
-        public LogoViewModel GetById(Int64 id)
+        public HomeViewModel GetById(Int64 id)
         {
-            return _mapper.Map<Logo, LogoViewModel>(_logoService.GetById(id));
+            return _mapper.Map<Home, HomeViewModel>(_logoService.GetById(id));
         }
 
-        public LogoViewModel Update(LogoViewModel logoViewModel)
+        public HomeViewModel Update(HomeViewModel logoViewModel)
         {
-            var logo = _mapper.Map<LogoViewModel, Logo>(logoViewModel);
+            var logo = _mapper.Map<HomeViewModel, Home>(logoViewModel);
             _logoService.Update(logo, logo.Id);
             return logoViewModel;
         }

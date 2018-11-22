@@ -1,6 +1,6 @@
 ﻿using OpenId3as.DivulgacaoONGs.Domain.Entities.Page;
-using OpenId3as.DivulgacaoONGs.Domain.Interfaces.Repositories;
-using OpenId3as.DivulgacaoONGs.Domain.Interfaces.Services;
+using OpenId3as.DivulgacaoONGs.Domain.Interfaces.Repositories.Page;
+using OpenId3as.DivulgacaoONGs.Domain.Interfaces.Services.Page;
 using System;
 using System.Collections.Generic;
 
@@ -26,7 +26,7 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Services.Page
 
         public void Delete(long id)
         {
-            throw new NotImplementedException();
+            _logoRepository.Delete(id);
         }
 
         public void Dispose()

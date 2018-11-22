@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace OpenId3as.DivulgacaoONGs.Application.Interfaces
+namespace OpenId3as.DivulgacaoONGs.Application.Interfaces.Page
 {
     public interface ILogoAppService : IDisposable
     {
@@ -11,6 +11,5 @@ namespace OpenId3as.DivulgacaoONGs.Application.Interfaces
         LogoViewModel GetById(Int64 id);
         IEnumerable<LogoViewModel> GetAll();
         void Delete(Int64 id);
-        
     }
 }

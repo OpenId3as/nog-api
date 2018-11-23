@@ -8,6 +8,8 @@ using OpenId3as.DivulgacaoONGs.Domain.Interfaces.Services;
 using OpenId3as.DivulgacaoONGs.Domain.Services.Collaborators;
 using OpenId3as.DivulgacaoONGs.Domain.Services.Institutions;
 using OpenId3as.DivulgacaoONGs.Domain.Services.Volunteers;
+using ILog = OpenId3as.DivulgacaoONGs.Infra.CrossCutting.Log.Interfaces;
+using LogRep = OpenId3as.DivulgacaoONGs.Infra.CrossCutting.Log.Repositories;
 using OpenId3as.DivulgacaoONGs.Infra.Data.Interfaces;
 using OpenId3as.DivulgacaoONGs.Infra.Data.Repositories;
 using OpenId3as.DivulgacaoONGs.Infra.Data.Repositories.Collaborators;
@@ -72,6 +74,10 @@ namespace OpenId3as.DivulgacaoONGs.Infra.CrossCutting.IoC
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IMongoRepository<>), typeof(MongoRepository<>));
             services.AddScoped(typeof(IPostgresRepository<>), typeof(PostgresRepository<>));
+
+            //LOG
+            services.AddScoped(typeof(ILog.IPostgresRepository<>), typeof(LogRep.PostgresRepository<>));
+            services.AddScoped<ILog.ILogRepository, LogRep.LogRepository>();
         }
     }
 }

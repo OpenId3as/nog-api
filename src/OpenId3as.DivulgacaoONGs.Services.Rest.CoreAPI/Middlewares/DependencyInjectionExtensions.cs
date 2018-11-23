@@ -5,10 +5,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OpenId3as.DivulgacaoONGs.Application.AutoMapper.Config;
 using OpenId3as.DivulgacaoONGs.Infra.CrossCutting.IoC;
+using OpenId3as.DivulgacaoONGs.Infra.CrossCutting.Log.Context;
+using StackExchange.Redis;
+using Swashbuckle.AspNetCore.Swagger;
+using AM = AutoMapper;
 using Mongo = OpenId3as.DivulgacaoONGs.Infra.Data.Context.Mongo;
 using Postgres = OpenId3as.DivulgacaoONGs.Infra.Data.Context.Postgres;
-using StackExchange.Redis;
-using AM = AutoMapper;
 
 namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Middlewares
 {
@@ -22,11 +24,44 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Middlewares
             AutoMapperConfig.RegisterMappingsInit();
             services.AddSingleton(Mapper.Configuration);
 
+            //Swagger
+            services.AddSwaggerGen(c =>
+            {
+                c.DescribeAllEnumsAsStrings();
+                c.SwaggerDoc("v1",
+                    new Info
+                    {
+                        Title = "Divulgação de ONG's",
+                        Version = "v1",
+                        Description = "API Rest desenvolvida em ASPNET Core 2.2",
+                        Contact = new Contact
+                        {
+                            Name = "Marcelo Ribeiro de Albuquerque",
+                            Url = "https://github.com/openid3as"
+                        }
+                    });
+
+                //string caminhoAplicacao = PlatformServices.Default.Application.ApplicationBasePath;
+                //string nomeAplicacao = PlatformServices.Default.Application.ApplicationName;
+                //string caminhoXmlDoc = Path.Combine(caminhoAplicacao, $"{nomeAplicacao}.xml");
+                //c.IncludeXmlComments(caminhoXmlDoc);
+            });
+
             //Postgres
-            services.AddDbContext<Postgres.NOGContext>(
-                options =>
-                    options.UseNpgsql(configuration.GetConnectionString("ST_POSTGRES_NOG"))
-                );
+            services
+                .AddEntityFrameworkNpgsql()
+                .AddDbContext<Postgres.NOGContext>(
+                    options =>
+                        options.UseNpgsql(configuration.GetConnectionString("ST_POSTGRES_NOG"))
+                    )
+                .BuildServiceProvider();
+
+            //Log
+            //services
+            //    .AddDbContext<LogContext>(
+            //        options =>
+            //            options.UseNpgsql(configuration.GetConnectionString("ST_POSTGRES_LOG"))
+            //        );
 
             //Mongo
             var mongoContext = new Mongo.NOGContext(

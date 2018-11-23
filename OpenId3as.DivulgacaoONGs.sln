@@ -15,17 +15,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.1 - Data", "4.1 - Data", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.2 - CrossCutting", "4.2 - CrossCutting", "{F151BA7C-5BF6-4409-9C70-E871DF0D8276}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI", "src\OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI\OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.csproj", "{16314CB8-03F0-454F-BAD9-0FF1128C8EDF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI", "src\OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI\OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.csproj", "{16314CB8-03F0-454F-BAD9-0FF1128C8EDF}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{5B63DBF0-54A8-4EC3-AC2B-6CDBB43709EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenId3as.DivulgacaoONGs.Application", "src\OpenId3as.DivulgacaoONGs.Application\OpenId3as.DivulgacaoONGs.Application.csproj", "{52C26987-4562-4E7A-A3AD-1FB57DD3FFA6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenId3as.DivulgacaoONGs.Application", "src\OpenId3as.DivulgacaoONGs.Application\OpenId3as.DivulgacaoONGs.Application.csproj", "{52C26987-4562-4E7A-A3AD-1FB57DD3FFA6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenId3as.DivulgacaoONGs.Domain", "src\OpenId3as.DivulgacaoONGs.Domain\OpenId3as.DivulgacaoONGs.Domain.csproj", "{4C9CD773-A442-4829-95EC-004E819326F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenId3as.DivulgacaoONGs.Domain", "src\OpenId3as.DivulgacaoONGs.Domain\OpenId3as.DivulgacaoONGs.Domain.csproj", "{4C9CD773-A442-4829-95EC-004E819326F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenId3as.DivulgacaoONGs.Infra.CrossCutting.IoC", "src\OpenId3as.DivulgacaoONGs.Infra.CrossCutting.IoC\OpenId3as.DivulgacaoONGs.Infra.CrossCutting.IoC.csproj", "{2583FEE7-52D1-4377-BDDB-819D3000782D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenId3as.DivulgacaoONGs.Infra.CrossCutting.IoC", "src\OpenId3as.DivulgacaoONGs.Infra.CrossCutting.IoC\OpenId3as.DivulgacaoONGs.Infra.CrossCutting.IoC.csproj", "{2583FEE7-52D1-4377-BDDB-819D3000782D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenId3as.DivulgacaoONGs.Infra.Data", "src\OpenId3as.DivulgacaoONGs.Infra.Data\OpenId3as.DivulgacaoONGs.Infra.Data.csproj", "{D2DBBF19-44E2-4B28-BBC6-315490A5D335}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenId3as.DivulgacaoONGs.Infra.CrossCutting.Log", "src\OpenId3as.DivulgacaoONGs.Infra.CrossCutting.Log\OpenId3as.DivulgacaoONGs.Infra.CrossCutting.Log.csproj", "{AF9BA48E-041C-4802-A69D-DDD8C5DE6C6D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{D2DBBF19-44E2-4B28-BBC6-315490A5D335}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2DBBF19-44E2-4B28-BBC6-315490A5D335}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2DBBF19-44E2-4B28-BBC6-315490A5D335}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF9BA48E-041C-4802-A69D-DDD8C5DE6C6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF9BA48E-041C-4802-A69D-DDD8C5DE6C6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF9BA48E-041C-4802-A69D-DDD8C5DE6C6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF9BA48E-041C-4802-A69D-DDD8C5DE6C6D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,6 +75,7 @@ Global
 		{4C9CD773-A442-4829-95EC-004E819326F8} = {8C72654F-EB5F-4473-8EBF-A5A72B7973F6}
 		{2583FEE7-52D1-4377-BDDB-819D3000782D} = {F151BA7C-5BF6-4409-9C70-E871DF0D8276}
 		{D2DBBF19-44E2-4B28-BBC6-315490A5D335} = {816FDB28-97F5-4A25-A697-F349738A310A}
+		{AF9BA48E-041C-4802-A69D-DDD8C5DE6C6D} = {F151BA7C-5BF6-4409-9C70-E871DF0D8276}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CF16F623-7CED-4988-AABB-159A33AFFBC0}

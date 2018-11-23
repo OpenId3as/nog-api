@@ -12,6 +12,7 @@
   <ItemGroup>
     <ProjectReference Include="..\OpenId3as.DivulgacaoONGs.Application\OpenId3as.DivulgacaoONGs.Application.csproj" />
     <ProjectReference Include="..\OpenId3as.DivulgacaoONGs.Domain\OpenId3as.DivulgacaoONGs.Domain.csproj" />
+    <ProjectReference Include="..\OpenId3as.DivulgacaoONGs.Infra.CrossCutting.Log\OpenId3as.DivulgacaoONGs.Infra.CrossCutting.Log.csproj" />
     <ProjectReference Include="..\OpenId3as.DivulgacaoONGs.Infra.Data\OpenId3as.DivulgacaoONGs.Infra.Data.csproj" />
   </ItemGroup>
 

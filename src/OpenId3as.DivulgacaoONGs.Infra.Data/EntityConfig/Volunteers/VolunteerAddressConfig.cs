@@ -52,7 +52,7 @@ namespace OpenId3as.DivulgacaoONGs.Infra.Data.EntityConfig.Volunteers
 
             builder.HasOne<Volunteer>(x => x.Volunteer).WithMany(x => x.Addresses);
 
-            builder.ToTable("volunteer_address");
+            builder.ToTable("volunteer_address", schema: "nog");
         }
     }
 }

@@ -39,7 +39,7 @@ namespace OpenId3as.DivulgacaoONGs.Infra.Data.EntityConfig.Collaborartors
             builder.HasMany<CollaboratorAddress>(x => x.Addresses).WithOne(x => x.Collaborator);
             builder.HasMany<CollaboratorPhone>(x => x.Phones).WithOne(x => x.Collaborator);
 
-            builder.ToTable("collaborator");
+            builder.ToTable("collaborator", schema: "nog");
         }
     }
 }

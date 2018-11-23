@@ -32,7 +32,7 @@ namespace OpenId3as.DivulgacaoONGs.Infra.Data.EntityConfig.Institutions
 
             builder.HasOne<Institution>(x => x.Institution).WithMany(x => x.Phones); ;
 
-            builder.ToTable("institution_phone");
+            builder.ToTable("institution_phone", schema: "nog");
         }
     }
 }

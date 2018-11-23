@@ -25,7 +25,9 @@ namespace OpenId3as.DivulgacaoONGs.Application.Services.Page
         public LogoViewModel Add(LogoViewModel logoViewModel)
         {
             var logo = _mapper.Map<LogoViewModel, Logo>(logoViewModel);
+            logo.Id = new Logo().Id;
             _logoService.Add(logo);
+            logoViewModel = _mapper.Map<Logo, LogoViewModel>(logo);
             return logoViewModel;
         }
 

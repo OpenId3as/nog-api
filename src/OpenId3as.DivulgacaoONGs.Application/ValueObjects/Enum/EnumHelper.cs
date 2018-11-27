@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
-namespace OpenId3as.DivulgacaoONGs.Domain.ValueObjects.Enum
+namespace OpenId3as.DivulgacaoONGs.Application.ValueObjects.Enum
 {
     public class EnumHelper<T>
     {

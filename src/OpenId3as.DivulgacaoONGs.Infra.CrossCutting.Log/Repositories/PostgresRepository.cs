@@ -34,8 +34,8 @@ namespace OpenId3as.DivulgacaoONGs.Infra.CrossCutting.Log.Repositories
 
         public void Dispose()
         {
-            //Db.Dispose();
-            //GC.SuppressFinalize(this);
+            Db.Dispose();
+            GC.SuppressFinalize(this);
         }
 
         public virtual IEnumerable<TEntity> GetAll()

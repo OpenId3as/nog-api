@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using OpenId3as.DivulgacaoONGs.Infra.CrossCutting.Log.Interfaces;
-using OpenId3as.DivulgacaoONGs.Infra.CrossCutting.Log.Logger;
+using OpenId3as.DivulgacaoONGs.Infra.CrossCutting.Log.Context;
+using OpenId3as.DivulgacaoONGs.Infra.CrossCutting.Log.Repositories;
+using OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Logger;
 using OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Middlewares;
 
 namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI
@@ -23,6 +25,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddApiVersioning(options => options.ApiVersionReader = new HeaderApiVersionReader("api-version"));
             services.AddDependencyInjections(Configuration);
         }
 
@@ -30,22 +33,18 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-            }
             else
-            {
                 app.UseHsts();
-            }
 
-            loggerFactory.AddContext(LogLevel.Information, Configuration.GetConnectionString("ST_POSTGRES_LOG"));
             app.UseHttpsRedirection();
             app.UseMvc();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("v1/swagger.json", "Divulgação ONG's");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Divulgação ONG's");
             });
+            loggerFactory.AddContext(LogLevel.Warning, new LogRepository(new LogContext(Configuration.GetConnectionString("ST_POSTGRES_LOG"))));
         }
     }
 }

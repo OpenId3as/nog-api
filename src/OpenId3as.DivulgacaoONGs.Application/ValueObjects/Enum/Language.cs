@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace OpenId3as.DivulgacaoONGs.Domain.ValueObjects.Enum
+namespace OpenId3as.DivulgacaoONGs.Application.ValueObjects.Enum
 {
     public enum Language
     {

@@ -57,11 +57,13 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Middlewares
                 .BuildServiceProvider();
 
             //Log
-            //services
-            //    .AddDbContext<LogContext>(
-            //        options =>
-            //            options.UseNpgsql(configuration.GetConnectionString("ST_POSTGRES_LOG"))
-            //        );
+            services
+                .AddEntityFrameworkNpgsql()
+                .AddDbContext<LogContext>(
+                    options =>
+                        options.UseNpgsql(configuration.GetConnectionString("ST_POSTGRES_LOG"))
+                    )
+                .BuildServiceProvider();
 
             //Mongo
             var mongoContext = new Mongo.NOGContext(

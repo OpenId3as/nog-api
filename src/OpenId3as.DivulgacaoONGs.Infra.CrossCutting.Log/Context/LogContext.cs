@@ -7,6 +7,11 @@ namespace OpenId3as.DivulgacaoONGs.Infra.CrossCutting.Log.Context
     public class LogContext : DbContext
     {
         private readonly string _cnString;
+        public LogContext(DbContextOptions<LogContext> options) : base(options)
+        {
+
+        }
+
         public LogContext(string cnString)
         {
             _cnString = cnString;

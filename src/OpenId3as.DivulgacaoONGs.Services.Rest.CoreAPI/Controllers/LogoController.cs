@@ -7,6 +7,7 @@ using System.Collections.Generic;
 
 namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
 {
+    [ApiVersionNeutral]
     [Route("api/[controller]")]
     public class LogoController : BaseController
     {

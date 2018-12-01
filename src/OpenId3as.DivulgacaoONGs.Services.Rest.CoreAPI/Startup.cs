@@ -39,11 +39,11 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI
 
             app.UseHttpsRedirection();
             app.UseMvc();
-            //app.UseSwagger();
-            //app.UseSwaggerUI(c =>
-            //{
-            //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Divulgação ONG's");
-            //});
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Divulgação ONG's");
+            });
             loggerFactory.AddContext(LogLevel.Warning, new LogRepository(new LogContext(Configuration.GetConnectionString("ST_POSTGRES_LOG"))));
         }
     }

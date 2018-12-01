@@ -27,7 +27,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenId3as.DivulgacaoONGs.In
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenId3as.DivulgacaoONGs.Infra.CrossCutting.Log", "src\OpenId3as.DivulgacaoONGs.Infra.CrossCutting.Log\OpenId3as.DivulgacaoONGs.Infra.CrossCutting.Log.csproj", "{AF9BA48E-041C-4802-A69D-DDD8C5DE6C6D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI", "src\OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI\OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.csproj", "{3DACB1CB-5440-404D-AD7A-410B19F58253}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI", "src\OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI\OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.csproj", "{3DACB1CB-5440-404D-AD7A-410B19F58253}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenId3as.DivulgacaoONGs.Infra.Data.Test", "test\OpenId3as.DivulgacaoONGs.Infra.Data.Test\OpenId3as.DivulgacaoONGs.Infra.Data.Test.csproj", "{FE710479-4FFA-49CE-ADCA-DF9F55D73912}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{3DACB1CB-5440-404D-AD7A-410B19F58253}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DACB1CB-5440-404D-AD7A-410B19F58253}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3DACB1CB-5440-404D-AD7A-410B19F58253}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE710479-4FFA-49CE-ADCA-DF9F55D73912}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE710479-4FFA-49CE-ADCA-DF9F55D73912}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE710479-4FFA-49CE-ADCA-DF9F55D73912}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE710479-4FFA-49CE-ADCA-DF9F55D73912}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -76,6 +82,7 @@ Global
 		{D2DBBF19-44E2-4B28-BBC6-315490A5D335} = {816FDB28-97F5-4A25-A697-F349738A310A}
 		{AF9BA48E-041C-4802-A69D-DDD8C5DE6C6D} = {F151BA7C-5BF6-4409-9C70-E871DF0D8276}
 		{3DACB1CB-5440-404D-AD7A-410B19F58253} = {8CE3597A-77B1-4A6E-A88B-D4CC3D5989A9}
+		{FE710479-4FFA-49CE-ADCA-DF9F55D73912} = {816FDB28-97F5-4A25-A697-F349738A310A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CF16F623-7CED-4988-AABB-159A33AFFBC0}

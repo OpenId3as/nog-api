@@ -15,6 +15,11 @@ namespace OpenId3as.DivulgacaoONGs.Infra.Data.Context.Postgres
 
         }
 
+        public NOGContext()
+        {
+
+        }
+
         DbSet<Collaborator> Collaborator { get; set; }
         DbSet<CollaboratorAddress> CollaboratorAddresses { get; set; }
         DbSet<CollaboratorPhone> CollaboratorPhones { get; set; }

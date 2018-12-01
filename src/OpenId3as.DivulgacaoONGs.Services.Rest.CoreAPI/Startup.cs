@@ -24,7 +24,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddApiVersioning(options => options.ApiVersionReader = new HeaderApiVersionReader("api-version"));
             services.AddDependencyInjections(Configuration);
         }
@@ -39,11 +39,11 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI
 
             app.UseHttpsRedirection();
             app.UseMvc();
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Divulgação ONG's");
-            });
+            //app.UseSwagger();
+            //app.UseSwaggerUI(c =>
+            //{
+            //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Divulgação ONG's");
+            //});
             loggerFactory.AddContext(LogLevel.Warning, new LogRepository(new LogContext(Configuration.GetConnectionString("ST_POSTGRES_LOG"))));
         }
     }

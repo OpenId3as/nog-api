@@ -33,7 +33,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Middlewares
                     {
                         Title = "Divulgação de ONG's",
                         Version = "v1",
-                        Description = "API Rest desenvolvida em ASPNET Core 2.2",
+                        Description = "API Rest desenvolvida em ASPNET Core 2.1",
                         Contact = new Contact
                         {
                             Name = "Marcelo Ribeiro de Albuquerque",

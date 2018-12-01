@@ -84,10 +84,19 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         {
             var linkContainer = new LinkContainer();
             var getAll = new Link() { Method = "GET", Rel = "get all collaborators", Href = Url.Link("GetAllCollaborators", new { }) };
-            var getById = new Link() { Method = "GET", Rel = "get collaborator by id", Href = Url.Link("GetCollaboratorById", new { id = collaborator.Id }) };
             var insert = new Link() { Method = "POST", Rel = "insert collaborator", Href = Url.Link("InsertCollaborator", new { }) };
-            var update = new Link() { Method = "PUT", Rel = "update collaborator", Href = Url.Link("UpdateCollaborator", new { id = collaborator.Id }) };
-            var delete = new Link() { Method = "DELETE", Rel = "delete collaborator", Href = Url.Link("DeleteCollaboratorRoute", new { id = collaborator.Id }) };
+
+            var getById = new Link();
+            var update = new Link();
+            var delete = new Link();
+
+            if (collaborator != null)
+            {
+                getById = new Link() { Method = "GET", Rel = "get collaborator by id", Href = Url.Link("GetCollaboratorById", new { id = collaborator.Id }) };
+                update = new Link() { Method = "PUT", Rel = "update collaborator", Href = Url.Link("UpdateCollaborator", new { id = collaborator.Id }) };
+                delete = new Link() { Method = "DELETE", Rel = "delete collaborator", Href = Url.Link("DeleteCollaboratorRoute", new { id = collaborator.Id }) };
+            }
+
             switch (method)
             {
                 case Method.GetAll:

@@ -30,7 +30,8 @@ namespace OpenId3as.DivulgacaoONGs.Application.ValueObjects.HATEOAS
 
         public void AddRangeLink(IEnumerable<Link> links)
         {
-            Links.AddRange(links);
+            if (links != null)
+                Links.AddRange(links);
         }
     }
 }

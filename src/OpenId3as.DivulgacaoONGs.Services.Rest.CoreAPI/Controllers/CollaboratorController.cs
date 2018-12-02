@@ -21,13 +21,11 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         private readonly IDistributedCache _cache;
 
         public CollaboratorController(IDistributedCache cache,
-            ICollaboratorAppService collaboratorAppService,
-            IPageApp.ICollaboratorAppService collaboratorPageAppService
+            ICollaboratorAppService collaboratorAppService
             )
         {
             _cache = cache;
             _collaboratorAppService = collaboratorAppService;
-            _collaboratorPageAppService = collaboratorPageAppService;
         }
 
         [HttpGet(Name = "GetAllCollaborators")]
@@ -51,11 +49,16 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         /// <param name="id">Id do colaborador.</param>
         /// <returns>Objeto contendo todas as informações do colaborador.</returns>
         [HttpGet("{id}", Name = "GetCollaboratorById")]
-        public CollaboratorViewModel Get(Int64 id)
+        public IActionResult Get(Int64 id)
         {
             var collaborator = _collaboratorAppService.GetById(id);
-            collaborator.AddRangeLink(CreateLinks(Method.Get, collaborator));
-            return collaborator;
+            if (collaborator != null)
+            {
+                collaborator.AddRangeLink(CreateLinks(Method.Get, collaborator));
+                return Ok(collaborator);
+            }
+            else
+                return NoContent();
         }
 
         [HttpPost(Name = "InsertCollaborator")]
@@ -83,49 +86,52 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         private IEnumerable<Link> CreateLinks(Method method, CollaboratorViewModel collaborator = null)
         {
             var linkContainer = new LinkContainer();
-            var getAll = new Link() { Method = "GET", Rel = "get all collaborators", Href = Url.Link("GetAllCollaborators", new { }) };
-            var insert = new Link() { Method = "POST", Rel = "insert collaborator", Href = Url.Link("InsertCollaborator", new { }) };
-
-            var getById = new Link();
-            var update = new Link();
-            var delete = new Link();
-
-            if (collaborator != null)
+            if(Url != null)
             {
-                getById = new Link() { Method = "GET", Rel = "get collaborator by id", Href = Url.Link("GetCollaboratorById", new { id = collaborator.Id }) };
-                update = new Link() { Method = "PUT", Rel = "update collaborator", Href = Url.Link("UpdateCollaborator", new { id = collaborator.Id }) };
-                delete = new Link() { Method = "DELETE", Rel = "delete collaborator", Href = Url.Link("DeleteCollaboratorRoute", new { id = collaborator.Id }) };
-            }
+                var getAll = new Link() { Method = "GET", Rel = "get all collaborators", Href = Url.Link("GetAllCollaborators", new { }) };
+                var insert = new Link() { Method = "POST", Rel = "insert collaborator", Href = Url.Link("InsertCollaborator", new { }) };
 
-            switch (method)
-            {
-                case Method.GetAll:
-                    linkContainer.AddLink(getAll);
-                    linkContainer.AddLink(insert);
-                    break;
-                case Method.Get:
-                    linkContainer.AddLink(getById);
-                    linkContainer.AddLink(update);
-                    linkContainer.AddLink(delete);
-                    break;
-                case Method.Post:
-                    linkContainer.AddLink(insert);
-                    linkContainer.AddLink(getById);
-                    linkContainer.AddLink(update);
-                    linkContainer.AddLink(delete);
-                    break;
-                case Method.Put:
-                    linkContainer.AddLink(update);
-                    linkContainer.AddLink(getById);
-                    linkContainer.AddLink(delete);
-                    break;
-                case Method.Delete:
-                    linkContainer.AddLink(delete);
-                    linkContainer.AddLink(getById);
-                    linkContainer.AddLink(update);
-                    break;
+                var getById = new Link();
+                var update = new Link();
+                var delete = new Link();
+
+                if (collaborator != null)
+                {
+                    getById = new Link() { Method = "GET", Rel = "get collaborator by id", Href = Url.Link("GetCollaboratorById", new { id = collaborator.Id }) };
+                    update = new Link() { Method = "PUT", Rel = "update collaborator", Href = Url.Link("UpdateCollaborator", new { id = collaborator.Id }) };
+                    delete = new Link() { Method = "DELETE", Rel = "delete collaborator", Href = Url.Link("DeleteCollaboratorRoute", new { id = collaborator.Id }) };
+                }
+
+                switch (method)
+                {
+                    case Method.GetAll:
+                        linkContainer.AddLink(getAll);
+                        linkContainer.AddLink(insert);
+                        break;
+                    case Method.Get:
+                        linkContainer.AddLink(getById);
+                        linkContainer.AddLink(update);
+                        linkContainer.AddLink(delete);
+                        break;
+                    case Method.Post:
+                        linkContainer.AddLink(insert);
+                        linkContainer.AddLink(getById);
+                        linkContainer.AddLink(update);
+                        linkContainer.AddLink(delete);
+                        break;
+                    case Method.Put:
+                        linkContainer.AddLink(update);
+                        linkContainer.AddLink(getById);
+                        linkContainer.AddLink(delete);
+                        break;
+                    case Method.Delete:
+                        linkContainer.AddLink(delete);
+                        linkContainer.AddLink(getById);
+                        linkContainer.AddLink(update);
+                        break;
+                }
+                linkContainer.Links[0].Rel = "self";
             }
-            linkContainer.Links[0].Rel = "self";
             return linkContainer.Links;
         }
     }

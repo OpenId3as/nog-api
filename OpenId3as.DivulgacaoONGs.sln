@@ -31,6 +31,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenId3as.DivulgacaoONGs.Se
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenId3as.DivulgacaoONGs.Infra.Data.Test", "test\OpenId3as.DivulgacaoONGs.Infra.Data.Test\OpenId3as.DivulgacaoONGs.Infra.Data.Test.csproj", "{FE710479-4FFA-49CE-ADCA-DF9F55D73912}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Test", "test\OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Test\OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Test.csproj", "{1E864F35-AE7D-4178-B1FB-02D78F65374D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{FE710479-4FFA-49CE-ADCA-DF9F55D73912}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE710479-4FFA-49CE-ADCA-DF9F55D73912}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE710479-4FFA-49CE-ADCA-DF9F55D73912}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E864F35-AE7D-4178-B1FB-02D78F65374D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E864F35-AE7D-4178-B1FB-02D78F65374D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E864F35-AE7D-4178-B1FB-02D78F65374D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E864F35-AE7D-4178-B1FB-02D78F65374D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,6 +89,7 @@ Global
 		{AF9BA48E-041C-4802-A69D-DDD8C5DE6C6D} = {F151BA7C-5BF6-4409-9C70-E871DF0D8276}
 		{3DACB1CB-5440-404D-AD7A-410B19F58253} = {8CE3597A-77B1-4A6E-A88B-D4CC3D5989A9}
 		{FE710479-4FFA-49CE-ADCA-DF9F55D73912} = {816FDB28-97F5-4A25-A697-F349738A310A}
+		{1E864F35-AE7D-4178-B1FB-02D78F65374D} = {8CE3597A-77B1-4A6E-A88B-D4CC3D5989A9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CF16F623-7CED-4988-AABB-159A33AFFBC0}

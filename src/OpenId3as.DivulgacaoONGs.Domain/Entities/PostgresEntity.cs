@@ -6,7 +6,7 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Entities
     public class PostgresEntity
     {
         [Column("in_id")]
-        public Int64 Id { get; set; }
+        public long Id { get; set; }
         [Column("ts_created")]
         public DateTime Created { get; set; }
         [Column("ts_updated")]

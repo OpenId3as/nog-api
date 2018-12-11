@@ -1,10 +1,10 @@
-﻿using System;
+﻿using OpenId3as.DivulgacaoONGs.Application.ValueObjects.HATEOAS;
 
 namespace OpenId3as.DivulgacaoONGs.Application.ViewModels.Page
 {
-    public class LogoViewModel
+    public class LogoViewModel : LinkContainer
     {
-        public Int64 Id { get; set; }
+        public long Id { get; set; }
         public string Institution { get; set; }
         public DataPageViewModel Data { get; set; }
     }

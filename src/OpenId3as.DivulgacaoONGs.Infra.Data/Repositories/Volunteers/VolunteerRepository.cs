@@ -33,7 +33,7 @@ namespace OpenId3as.DivulgacaoONGs.Infra.Data.Repositories.Volunteers
             return cn.Query<Volunteer>(sql);
         }
 
-        public override Volunteer GetById(Int64 id)
+        public override Volunteer GetById(long id)
         {
             var cn = Db.Database.GetDbConnection();
             var sql = @"SELECT

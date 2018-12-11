@@ -8,9 +8,9 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Interfaces.Services.Page
     {
         void Add(Collaborator collaborator);
         void AddRange(IEnumerable<Collaborator> collaborator);
-        void Update(Collaborator collaborator, Int64 id);
-        void Delete(Int64 id);
-        Collaborator GetById(Int64 id);
+        void Update(Collaborator collaborator, long id);
+        void Delete(long id);
+        Collaborator GetById(long id);
         IEnumerable<Collaborator> GetAll();
     }
 }

@@ -8,8 +8,8 @@ namespace OpenId3as.DivulgacaoONGs.Application.Interfaces.Page
     {
         LogoViewModel Add(LogoViewModel logoViewModel);
         LogoViewModel Update(LogoViewModel logoViewModel);
-        LogoViewModel GetById(Int64 id);
+        LogoViewModel GetById(long id);
         IEnumerable<LogoViewModel> GetAll();
-        void Delete(Int64 id);
+        void Delete(long id);
     }
 }

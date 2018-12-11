@@ -29,7 +29,7 @@ namespace OpenId3as.DivulgacaoONGs.Application.Services.Page
             return whoAreWeViewModel;
         }
 
-        public void Delete(Int64 id)
+        public void Delete(long id)
         {
             _whoAreWeService.Delete(id);
         }
@@ -45,7 +45,7 @@ namespace OpenId3as.DivulgacaoONGs.Application.Services.Page
             return _mapper.Map<IEnumerable<WhoAreWe>, IEnumerable<WhoAreWeViewModel>>(_whoAreWeService.GetAll());
         }
 
-        public WhoAreWeViewModel GetById(Int64 id)
+        public WhoAreWeViewModel GetById(long id)
         {
             return _mapper.Map<WhoAreWe, WhoAreWeViewModel>(_whoAreWeService.GetById(id));
         }

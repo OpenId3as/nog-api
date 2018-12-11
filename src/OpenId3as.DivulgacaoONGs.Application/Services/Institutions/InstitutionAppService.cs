@@ -34,7 +34,7 @@ namespace OpenId3as.DivulgacaoONGs.Application.Services.Institutions
             return institutionViewModel;
         }
 
-        public void Delete(Int64 id)
+        public void Delete(long id)
         {
             _uow.BeginTransaction();
             _institutionService.Delete(id);
@@ -52,7 +52,7 @@ namespace OpenId3as.DivulgacaoONGs.Application.Services.Institutions
             return _mapper.Map<IEnumerable<Institution>, IEnumerable<InstitutionViewModel>>(_institutionService.GetAll());
         }
 
-        public InstitutionViewModel GetById(Int64 id)
+        public InstitutionViewModel GetById(long id)
         {
             return _mapper.Map<Institution, InstitutionViewModel>(_institutionService.GetById(id));
         }

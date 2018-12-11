@@ -7,9 +7,9 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Interfaces.Repositories
     {
         void Add(TEntity obj);
         void AddRange(IEnumerable<TEntity> obj);
-        void Update(TEntity obj, Int64 id);
-        void Delete(Int64 id);
-        TEntity GetById(Int64 id);
+        void Update(TEntity obj, long id);
+        void Delete(long id);
+        TEntity GetById(long id);
         IEnumerable<TEntity> GetAll();
     }
 }

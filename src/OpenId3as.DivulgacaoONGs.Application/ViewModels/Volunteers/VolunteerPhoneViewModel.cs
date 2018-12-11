@@ -9,8 +9,8 @@ namespace OpenId3as.DivulgacaoONGs.Application.ViewModels.Volunteers
 
         }
 
-        public Int64 Id { get; set; }
-        public Int64 VolunteerId { get; set; }
+        public long Id { get; set; }
+        public long VolunteerId { get; set; }
         public int Type { get; set; }
         public string Number { get; set; }
         public DateTime Created { get; set; }

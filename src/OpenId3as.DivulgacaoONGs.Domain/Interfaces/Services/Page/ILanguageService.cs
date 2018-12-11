@@ -8,9 +8,9 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Interfaces.Services.Page
     {
         void Add(Language language);
         void AddRange(IEnumerable<Language> language);
-        void Update(Language language, Int64 id);
-        void Delete(Int64 id);
-        Language GetById(Int64 id);
+        void Update(Language language, long id);
+        void Delete(long id);
+        Language GetById(long id);
         IEnumerable<Language> GetAll();
     }
 }

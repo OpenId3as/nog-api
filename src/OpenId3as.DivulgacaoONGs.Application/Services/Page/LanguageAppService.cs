@@ -29,7 +29,7 @@ namespace OpenId3as.DivulgacaoONGs.Application.Services.Page
             return languageViewModel;
         }
 
-        public void Delete(Int64 id)
+        public void Delete(long id)
         {
             _languageService.Delete(id);
         }
@@ -45,7 +45,7 @@ namespace OpenId3as.DivulgacaoONGs.Application.Services.Page
             return _mapper.Map<IEnumerable<Language>, IEnumerable<LanguageViewModel>>(_languageService.GetAll());
         }
 
-        public LanguageViewModel GetById(Int64 id)
+        public LanguageViewModel GetById(long id)
         {
             return _mapper.Map<Language, LanguageViewModel>(_languageService.GetById(id));
         }

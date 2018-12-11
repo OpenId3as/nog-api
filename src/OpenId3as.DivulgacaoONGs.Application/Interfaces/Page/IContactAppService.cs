@@ -8,8 +8,8 @@ namespace OpenId3as.DivulgacaoONGs.Application.Interfaces.Page
     {
         ContactViewModel Add(ContactViewModel contactViewModel);
         ContactViewModel Update(ContactViewModel contactViewModel);
-        ContactViewModel GetById(Int64 id);
+        ContactViewModel GetById(long id);
         IEnumerable<ContactViewModel> GetAll();
-        void Delete(Int64 id);
+        void Delete(long id);
     }
 }

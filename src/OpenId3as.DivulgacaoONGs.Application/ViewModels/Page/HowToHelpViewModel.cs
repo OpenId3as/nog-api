@@ -1,10 +1,8 @@
-﻿using System;
-
-namespace OpenId3as.DivulgacaoONGs.Application.ViewModels.Page
+﻿namespace OpenId3as.DivulgacaoONGs.Application.ViewModels.Page
 {
     public class HowToHelpViewModel : BasePageViewModel
     {
-        public Int64 Id { get; set; }
+        public long Id { get; set; }
         public string Language { get; set; }
     }
 }

@@ -8,9 +8,9 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Interfaces.Services.Page
     {
         void Add(WhoAreWe whoAreWe);
         void AddRange(IEnumerable<WhoAreWe> whoAreWe);
-        void Update(WhoAreWe whoAreWe, Int64 id);
-        void Delete(Int64 id);
-        WhoAreWe GetById(Int64 id);
+        void Update(WhoAreWe whoAreWe, long id);
+        void Delete(long id);
+        WhoAreWe GetById(long id);
         IEnumerable<WhoAreWe> GetAll();
     }
 }

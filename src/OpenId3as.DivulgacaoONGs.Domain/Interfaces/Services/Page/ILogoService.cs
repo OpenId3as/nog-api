@@ -8,9 +8,9 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Interfaces.Services.Page
     {
         void Add(Logo logo);
         void AddRange(IEnumerable<Logo> logo);
-        void Update(Logo logo, Int64 id);
-        void Delete(Int64 id);
-        Logo GetById(Int64 id);
+        void Update(Logo logo, long id);
+        void Delete(long id);
+        Logo GetById(long id);
         IEnumerable<Logo> GetAll();
     }
 }

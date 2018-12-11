@@ -13,7 +13,7 @@ namespace OpenId3as.DivulgacaoONGs.Application.ViewModels.Collaborators
         }
 
         [DataMember]
-        public Int64 Id { get; set; }
+        public long Id { get; set; }
         [DataMember]
         public string FirstName { get; set; }
         [DataMember]

@@ -8,8 +8,8 @@ namespace OpenId3as.DivulgacaoONGs.Application.Interfaces
     {
         InstitutionViewModel Add(InstitutionViewModel institutionViewModel);
         InstitutionViewModel Update(InstitutionViewModel institutionViewModel);
-        InstitutionViewModel GetById(Int64 id);
+        InstitutionViewModel GetById(long id);
         IEnumerable<InstitutionViewModel> GetAll();
-        void Delete(Int64 id);
+        void Delete(long id);
     }
 }

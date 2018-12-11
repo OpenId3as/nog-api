@@ -1,16 +1,17 @@
-﻿using System;
+﻿using OpenId3as.DivulgacaoONGs.Application.ValueObjects.HATEOAS;
+using System;
 using System.Collections.Generic;
 
 namespace OpenId3as.DivulgacaoONGs.Application.ViewModels.Volunteers
 {
-    public class VolunteerViewModel
+    public class VolunteerViewModel : LinkContainer
     {
         public VolunteerViewModel()
         {
 
         }
 
-        public Int64 Id { get; set; }
+        public long Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }

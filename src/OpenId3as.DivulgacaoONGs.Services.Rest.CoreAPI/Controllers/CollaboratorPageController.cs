@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
-using OpenId3as.DivulgacaoONGs.Application.Interfaces;
+using OpenId3as.DivulgacaoONGs.Application.Interfaces.Page;
 using OpenId3as.DivulgacaoONGs.Application.ValueObjects.Enum;
 using OpenId3as.DivulgacaoONGs.Application.ValueObjects.HATEOAS;
-using OpenId3as.DivulgacaoONGs.Application.ViewModels.Collaborators;
+using OpenId3as.DivulgacaoONGs.Application.ViewModels.Page;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,26 +11,26 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
 {
     [ApiVersionNeutral]
     [Route("api/[controller]")]
-    public class CollaboratorController : BaseController
+    public class CollaboratorPageController : BaseController
     {
-        private readonly ICollaboratorAppService _collaboratorAppService;
+        private readonly ICollaboratorAppService _collaboratorPageAppService;
         private readonly IDistributedCache _cache;
 
-        public CollaboratorController(IDistributedCache cache,
-                                    ICollaboratorAppService collaboratorAppService)
+        public CollaboratorPageController(IDistributedCache cache,
+                                    ICollaboratorAppService collaboratorPageAppService)
         {
             _cache = cache;
-            _collaboratorAppService = collaboratorAppService;
+            _collaboratorPageAppService = collaboratorPageAppService;
         }
 
-        [HttpGet(Name = "GetAllCollaborators")]
+        [HttpGet(Name = "GetAllCollaboratorsPages")]
         [ProducesResponseType(201, Type = typeof(ItemsLinkContainer<CollaboratorViewModel>))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         public ItemsLinkContainer<CollaboratorViewModel> Get()
         {
-            var collaborators = _collaboratorAppService.GetAll().ToList();
+            var collaborators = _collaboratorPageAppService.GetAll().ToList();
             collaborators.ForEach(x => x.AddRangeLink(CreateLinks(Method.Get, x)));
             var result = new ItemsLinkContainer<CollaboratorViewModel>()
             {
@@ -40,10 +40,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
             return result;
         }
 
-        /// <summary>Busca o colaborador da ONG por Id.</summary>
-        /// <param name="id">Id do colaborador.</param>
-        /// <returns>Objeto contendo todas as informações do colaborador.</returns>
-        [HttpGet("{id}", Name = "GetCollaboratorById")]
+        [HttpGet("{id}", Name = "GetCollaboratorPageById")]
         [ProducesResponseType(201, Type = typeof(CollaboratorViewModel))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
@@ -51,7 +48,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         [ProducesResponseType(404)]
         public IActionResult Get(long id)
         {
-            var collaborator = _collaboratorAppService.GetById(id);
+            var collaborator = _collaboratorPageAppService.GetById(id);
             if (collaborator != null)
             {
                 collaborator.AddRangeLink(CreateLinks(Method.Get, collaborator));
@@ -61,18 +58,18 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
                 return BadRequest();
         }
 
-        [HttpPost(Name = "InsertCollaborator")]
+        [HttpPost(Name = "InsertCollaboratorPage")]
         [ProducesResponseType(201, Type = typeof(CollaboratorViewModel))]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         public CollaboratorViewModel Post([FromBody]CollaboratorViewModel collaborator)
         {
-            collaborator = _collaboratorAppService.Add(collaborator);
+            collaborator = _collaboratorPageAppService.Add(collaborator);
             collaborator.AddRangeLink(CreateLinks(Method.Post, collaborator));
             return collaborator;
         }
 
-        [HttpPut("{id}", Name = "UpdateCollaborator")]
+        [HttpPut("{id}", Name = "UpdateCollaboratorPage")]
         [ProducesResponseType(201, Type = typeof(CollaboratorViewModel))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
@@ -80,9 +77,9 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         [ProducesResponseType(404)]
         public IActionResult Put(long id, [FromBody]CollaboratorViewModel collaborator)
         {
-            if (_collaboratorAppService.GetById(collaborator.Id).Id != 0)
+            if (_collaboratorPageAppService.GetById(collaborator.Id).Id != 0)
             {
-                collaborator = _collaboratorAppService.Update(collaborator);
+                collaborator = _collaboratorPageAppService.Update(collaborator);
                 collaborator.AddRangeLink(CreateLinks(Method.Put, collaborator));
                 return Ok(collaborator);
             }
@@ -90,29 +87,30 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
                 return BadRequest();
         }
 
-        [HttpDelete("{id}", Name = "DeleteCollaborator")]
+        [HttpDelete("{id}", Name = "DeleteCollaboratorPage")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         [ProducesResponseType(404)]
         public IActionResult Delete(long id)
         {
-            if (_collaboratorAppService.GetById(id).Id != 0)
+            if (_collaboratorPageAppService.GetById(id).Id != 0)
             {
-                _collaboratorAppService.Delete(id);
+                _collaboratorPageAppService.Delete(id);
                 return NoContent();
             }
             else
                 return BadRequest();
+            
         }
 
         private IEnumerable<Link> CreateLinks(Method method, CollaboratorViewModel collaborator = null)
         {
             var linkContainer = new LinkContainer();
-            if(Url != null)
+            if (Url != null)
             {
-                var getAll = new Link() { Method = "GET", Rel = "get all collaborators", Href = Url.Link("GetAllCollaborators", new { }) };
-                var insert = new Link() { Method = "POST", Rel = "insert collaborator", Href = Url.Link("InsertCollaborator", new { }) };
+                var getAll = new Link() { Method = "GET", Rel = "get all collaborators pages", Href = Url.Link("GetAllCollaboratorsPages", new { }) };
+                var insert = new Link() { Method = "POST", Rel = "insert collaborator page", Href = Url.Link("InsertCollaboratorPage", new { }) };
 
                 var getById = new Link();
                 var update = new Link();
@@ -120,9 +118,9 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
 
                 if (collaborator != null)
                 {
-                    getById = new Link() { Method = "GET", Rel = "get collaborator by id", Href = Url.Link("GetCollaboratorById", new { id = collaborator.Id }) };
-                    update = new Link() { Method = "PUT", Rel = "update collaborator", Href = Url.Link("UpdateCollaborator", new { id = collaborator.Id }) };
-                    delete = new Link() { Method = "DELETE", Rel = "delete collaborator", Href = Url.Link("DeleteCollaborator", new { id = collaborator.Id }) };
+                    getById = new Link() { Method = "GET", Rel = "get collaborator page by id", Href = Url.Link("GetCollaboratorPageById", new { id = collaborator.Id }) };
+                    update = new Link() { Method = "PUT", Rel = "update collaborator page", Href = Url.Link("UpdateCollaboratorPage", new { id = collaborator.Id }) };
+                    delete = new Link() { Method = "DELETE", Rel = "delete collaborator page", Href = Url.Link("DeleteCollaboratorPage", new { id = collaborator.Id }) };
                 }
 
                 switch (method)

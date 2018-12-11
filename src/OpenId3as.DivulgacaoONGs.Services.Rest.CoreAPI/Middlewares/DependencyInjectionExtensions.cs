@@ -40,11 +40,11 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Middlewares
                             Url = "https://github.com/openid3as"
                         }
                     });
-
                 //string caminhoAplicacao = PlatformServices.Default.Application.ApplicationBasePath;
                 //string nomeAplicacao = PlatformServices.Default.Application.ApplicationName;
                 //string caminhoXmlDoc = Path.Combine(caminhoAplicacao, $"{nomeAplicacao}.xml");
                 //c.IncludeXmlComments(caminhoXmlDoc);
+                c.CustomSchemaIds(x => x.FullName);
             });
 
             //Postgres

@@ -40,7 +40,7 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Services.Page
             return _contactRepository.GetAll();
         }
 
-        public Contact GetById(Int64 id)
+        public Contact GetById(long id)
         {
             return _contactRepository.GetById(id);
         }

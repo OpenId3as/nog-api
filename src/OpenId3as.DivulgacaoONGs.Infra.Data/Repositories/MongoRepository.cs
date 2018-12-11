@@ -1,5 +1,4 @@
-﻿using MongoDB.Bson;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 using OpenId3as.DivulgacaoONGs.Domain.Interfaces.Repositories;
 using OpenId3as.DivulgacaoONGs.Infra.Data.Context.Mongo;
 using System;
@@ -27,19 +26,19 @@ namespace OpenId3as.DivulgacaoONGs.Infra.Data.Repositories
             _mongoContext.Db.GetCollection<TEntity>(typeof(TEntity).Name).InsertManyAsync(obj);
         }
 
-        public void Update(TEntity obj, Int64 id)
+        public void Update(TEntity obj, long id)
         {
             var filter = Builders<TEntity>.Filter.Eq("_id", id);
             _mongoContext.Db.GetCollection<TEntity>(typeof(TEntity).Name).ReplaceOne(filter, obj);
         }
 
-        public void Delete(Int64 id)
+        public void Delete(long id)
         {
             var filter = Builders<TEntity>.Filter.Eq("_id", id);
             _mongoContext.Db.GetCollection<TEntity>(typeof(TEntity).Name).DeleteOne(filter);
         }
 
-        public TEntity GetById(Int64 id)
+        public TEntity GetById(long id)
         {
             var filter = Builders<TEntity>.Filter.Eq("_id", id);
             return _mongoContext.Db.GetCollection<TEntity>(typeof(TEntity).Name).FindSync<TEntity>(filter).SingleOrDefault();

@@ -40,7 +40,7 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Services.Page
             return _logoRepository.GetAll();
         }
 
-        public Logo GetById(Int64 id)
+        public Logo GetById(long id)
         {
             return _logoRepository.GetById(id);
         }

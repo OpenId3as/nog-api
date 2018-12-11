@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OpenId3as.DivulgacaoONGs.Domain.Entities.Volunteers
 {
@@ -11,7 +10,7 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Entities.Volunteers
         }
 
         [Column("in_volunteer_id")]
-        public Int64 VolunteerId { get; set; }
+        public long VolunteerId { get; set; }
         [Column("in_postal_code")]
         public int PostalCode { get; set; }
         [Column("st_name")]

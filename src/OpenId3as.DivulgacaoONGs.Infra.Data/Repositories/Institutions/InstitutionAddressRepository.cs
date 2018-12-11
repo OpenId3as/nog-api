@@ -36,7 +36,7 @@ namespace OpenId3as.DivulgacaoONGs.Infra.Data.Repositories.Institutions
             return cn.Query<InstitutionAddress>(sql);
         }
 
-        public override InstitutionAddress GetById(Int64 id)
+        public override InstitutionAddress GetById(long id)
         {
             var cn = Db.Database.GetDbConnection();
             var sql = @"SELECT

@@ -29,7 +29,7 @@ namespace OpenId3as.DivulgacaoONGs.Application.Services.Page
             return howToHelpViewModel;
         }
 
-        public void Delete(Int64 id)
+        public void Delete(long id)
         {
             _howToHelpService.Delete(id);
         }
@@ -45,7 +45,7 @@ namespace OpenId3as.DivulgacaoONGs.Application.Services.Page
             return _mapper.Map<IEnumerable<HowToHelp>, IEnumerable<HowToHelpViewModel>>(_howToHelpService.GetAll());
         }
 
-        public HowToHelpViewModel GetById(Int64 id)
+        public HowToHelpViewModel GetById(long id)
         {
             return _mapper.Map<HowToHelp, HowToHelpViewModel>(_howToHelpService.GetById(id));
         }

@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using OpenId3as.DivulgacaoONGs.Domain.Entities.Institutions;
 using OpenId3as.DivulgacaoONGs.Domain.Interfaces.Repositories;
 using OpenId3as.DivulgacaoONGs.Infra.Data.Context.Postgres;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -33,7 +32,7 @@ namespace OpenId3as.DivulgacaoONGs.Infra.Data.Repositories.Institutions
             return cn.Query<Institution>(sql);
         }
 
-        public override Institution GetById(Int64 id)
+        public override Institution GetById(long id)
         {
             var cn = Db.Database.GetDbConnection();
             var sql = @"SELECT

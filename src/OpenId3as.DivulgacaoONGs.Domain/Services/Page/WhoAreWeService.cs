@@ -40,7 +40,7 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Services.Page
             return _whoAreWeRepository.GetAll();
         }
 
-        public WhoAreWe GetById(Int64 id)
+        public WhoAreWe GetById(long id)
         {
             return _whoAreWeRepository.GetById(id);
         }

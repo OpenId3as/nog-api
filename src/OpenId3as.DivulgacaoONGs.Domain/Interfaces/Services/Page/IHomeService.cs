@@ -8,9 +8,9 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Interfaces.Services.Page
     {
         void Add(Home home);
         void AddRange(IEnumerable<Home> home);
-        void Update(Home home, Int64 id);
-        void Delete(Int64 id);
-        Home GetById(Int64 id);
+        void Update(Home home, long id);
+        void Delete(long id);
+        Home GetById(long id);
         IEnumerable<Home> GetAll();
     }
 }

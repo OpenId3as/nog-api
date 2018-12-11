@@ -8,8 +8,8 @@ namespace OpenId3as.DivulgacaoONGs.Application.Interfaces.Page
     {
         LanguageViewModel Add(LanguageViewModel languageViewModel);
         LanguageViewModel Update(LanguageViewModel languageViewModel);
-        LanguageViewModel GetById(Int64 id);
+        LanguageViewModel GetById(long id);
         IEnumerable<LanguageViewModel> GetAll();
-        void Delete(Int64 id);
+        void Delete(long id);
     }
 }

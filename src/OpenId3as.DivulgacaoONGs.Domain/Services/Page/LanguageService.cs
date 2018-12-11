@@ -40,7 +40,7 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Services.Page
             return _languageRepository.GetAll();
         }
 
-        public Language GetById(Int64 id)
+        public Language GetById(long id)
         {
             return _languageRepository.GetById(id);
         }

@@ -34,7 +34,7 @@ namespace OpenId3as.DivulgacaoONGs.Application.Services.Volunteers
             return volunteerViewModel;
         }
 
-        public void Delete(Int64 id)
+        public void Delete(long id)
         {
             _uow.BeginTransaction();
             _volunteerService.Delete(id);
@@ -52,7 +52,7 @@ namespace OpenId3as.DivulgacaoONGs.Application.Services.Volunteers
             return _mapper.Map<IEnumerable<Volunteer>, IEnumerable<VolunteerViewModel>>(_volunteerService.GetAll());
         }
 
-        public VolunteerViewModel GetById(Int64 id)
+        public VolunteerViewModel GetById(long id)
         {
             return _mapper.Map<Volunteer, VolunteerViewModel>(_volunteerService.GetById(id));
         }

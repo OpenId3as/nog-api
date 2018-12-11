@@ -11,7 +11,7 @@ namespace OpenId3as.DivulgacaoONGs.Infra.CrossCutting.Log.Entities
         }
 
         [Column("in_id")]
-        public Int64 Id { get; set; }
+        public long Id { get; set; }
         [Column("in_event_id")]
         public int? EventId { get; set; }
         [Column("st_log_level")]

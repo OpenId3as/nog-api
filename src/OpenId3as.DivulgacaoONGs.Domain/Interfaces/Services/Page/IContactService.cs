@@ -8,9 +8,9 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Interfaces.Services.Page
     {
         void Add(Contact contact);
         void AddRange(IEnumerable<Contact> contact);
-        void Update(Contact contact, Int64 id);
-        void Delete(Int64 id);
-        Contact GetById(Int64 id);
+        void Update(Contact contact, long id);
+        void Delete(long id);
+        Contact GetById(long id);
         IEnumerable<Contact> GetAll();
     }
 }

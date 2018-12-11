@@ -8,8 +8,8 @@ namespace OpenId3as.DivulgacaoONGs.Application.Interfaces.Page
     {
         HomeViewModel Add(HomeViewModel homeViewModel);
         HomeViewModel Update(HomeViewModel homeViewModel);
-        HomeViewModel GetById(Int64 id);
+        HomeViewModel GetById(long id);
         IEnumerable<HomeViewModel> GetAll();
-        void Delete(Int64 id);
+        void Delete(long id);
     }
 }

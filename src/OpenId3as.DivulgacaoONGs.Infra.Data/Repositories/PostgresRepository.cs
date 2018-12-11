@@ -24,7 +24,7 @@ namespace OpenId3as.DivulgacaoONGs.Infra.Data.Repositories
             return DbSet.Add(obj).Entity;
         }
 
-        public virtual void Delete(Int64 id)
+        public virtual void Delete(long id)
         {
             DbSet.Remove(DbSet.Find(id));
         }
@@ -41,7 +41,7 @@ namespace OpenId3as.DivulgacaoONGs.Infra.Data.Repositories
             return DbSet.ToList();
         }
 
-        public virtual TEntity GetById(Int64 id)
+        public virtual TEntity GetById(long id)
         {
             return DbSet.Find(id);
         }

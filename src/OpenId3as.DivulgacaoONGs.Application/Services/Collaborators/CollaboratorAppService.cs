@@ -34,7 +34,7 @@ namespace OpenId3as.DivulgacaoONGs.Application.Services.Collaborators
             return collaboratorViewModel;
         }
 
-        public void Delete(Int64 id)
+        public void Delete(long id)
         {
             _uow.BeginTransaction();
             _collaboratorService.Delete(id);
@@ -52,7 +52,7 @@ namespace OpenId3as.DivulgacaoONGs.Application.Services.Collaborators
             return _mapper.Map<IEnumerable<Collaborator>, IEnumerable<CollaboratorViewModel>>(_collaboratorService.GetAll());
         }
 
-        public CollaboratorViewModel GetById(Int64 id)
+        public CollaboratorViewModel GetById(long id)
         {
             return _mapper.Map<Collaborator, CollaboratorViewModel>(_collaboratorService.GetById(id));
         }

@@ -31,7 +31,7 @@ namespace OpenId3as.DivulgacaoONGs.Application.Services.Page
             return logoViewModel;
         }
 
-        public void Delete(Int64 id)
+        public void Delete(long id)
         {
             _logoService.Delete(id);
         }
@@ -47,7 +47,7 @@ namespace OpenId3as.DivulgacaoONGs.Application.Services.Page
             return _mapper.Map<IEnumerable<Logo>, IEnumerable<LogoViewModel>>(_logoService.GetAll());
         }
 
-        public LogoViewModel GetById(Int64 id)
+        public LogoViewModel GetById(long id)
         {
             return _mapper.Map<Logo, LogoViewModel>(_logoService.GetById(id));
         }

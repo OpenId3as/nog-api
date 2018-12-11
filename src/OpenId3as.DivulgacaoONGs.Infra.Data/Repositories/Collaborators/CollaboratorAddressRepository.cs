@@ -36,7 +36,7 @@ namespace OpenId3as.DivulgacaoONGs.Infra.Data.Repositories.Collaborators
             return cn.Query<CollaboratorAddress>(sql);
         }
 
-        public override CollaboratorAddress GetById(Int64 id)
+        public override CollaboratorAddress GetById(long id)
         {
             var cn = Db.Database.GetDbConnection();
             var sql = @"SELECT 

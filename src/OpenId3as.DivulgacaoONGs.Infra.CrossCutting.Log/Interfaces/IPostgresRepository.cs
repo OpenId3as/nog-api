@@ -8,9 +8,9 @@ namespace OpenId3as.DivulgacaoONGs.Infra.CrossCutting.Log.Interfaces
     {
         TEntity Add(TEntity obj);
         TEntity Update(TEntity obj);
-        void Delete(Int64 id);
+        void Delete(long id);
         int SaveChanges();
-        TEntity GetById(Int64 id);
+        TEntity GetById(long id);
         IEnumerable<TEntity> GetAll();
         IEnumerable<TEntity> Search(Expression<Func<TEntity, bool>> predicate);
     }

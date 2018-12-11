@@ -33,7 +33,7 @@ namespace OpenId3as.DivulgacaoONGs.Infra.Data.Repositories.Collaborators
             return cn.Query<Collaborator>(sql);
         }
 
-        public override Collaborator GetById(Int64 id)
+        public override Collaborator GetById(long id)
         {
             var cn = Db.Database.GetDbConnection();
             var sql = @"SELECT

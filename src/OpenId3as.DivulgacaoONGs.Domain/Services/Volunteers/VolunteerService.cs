@@ -20,7 +20,7 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Services.Volunteers
             return _volunteerRepository.Add(volunteer);
         }
 
-        public void Delete(Int64 id)
+        public void Delete(long id)
         {
             _volunteerRepository.Delete(id);
         }
@@ -36,7 +36,7 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Services.Volunteers
             return _volunteerRepository.GetAll();
         }
 
-        public Volunteer GetById(Int64 id)
+        public Volunteer GetById(long id)
         {
             return _volunteerRepository.GetById(id);
         }

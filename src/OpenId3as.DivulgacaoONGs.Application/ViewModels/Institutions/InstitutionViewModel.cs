@@ -1,16 +1,17 @@
-﻿using System;
+﻿using OpenId3as.DivulgacaoONGs.Application.ValueObjects.HATEOAS;
+using System;
 using System.Collections.Generic;
 
 namespace OpenId3as.DivulgacaoONGs.Application.ViewModels.Institutions
 {
-    public class InstitutionViewModel
+    public class InstitutionViewModel : LinkContainer
     {
         public InstitutionViewModel()
         {
 
         }
 
-        public Int64 Id { get; set; }
+        public long Id { get; set; }
         public string LegalName { get; set; }
         public string TradeName { get; set; }
         public string Email { get; set; }

@@ -8,8 +8,8 @@ namespace OpenId3as.DivulgacaoONGs.Application.Interfaces
     {
         CollaboratorViewModel Add(CollaboratorViewModel collaboratorViewModel);
         CollaboratorViewModel Update(CollaboratorViewModel collaboratorViewModel);
-        CollaboratorViewModel GetById(Int64 id);
+        CollaboratorViewModel GetById(long id);
         IEnumerable<CollaboratorViewModel> GetAll();
-        void Delete(Int64 id);
+        void Delete(long id);
     }
 }

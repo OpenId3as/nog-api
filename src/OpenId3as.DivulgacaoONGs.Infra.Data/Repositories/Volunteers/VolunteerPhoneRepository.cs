@@ -31,7 +31,7 @@ namespace OpenId3as.DivulgacaoONGs.Infra.Data.Repositories.Volunteers
             return cn.Query<VolunteerPhone>(sql);
         }
 
-        public override VolunteerPhone GetById(Int64 id)
+        public override VolunteerPhone GetById(long id)
         {
             var cn = Db.Database.GetDbConnection();
             var sql = @"SELECT

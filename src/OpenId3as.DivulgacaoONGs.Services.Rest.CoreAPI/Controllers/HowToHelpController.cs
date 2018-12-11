@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using OpenId3as.DivulgacaoONGs.Application.Interfaces.Page;
+using OpenId3as.DivulgacaoONGs.Application.ValueObjects.Enum;
+using OpenId3as.DivulgacaoONGs.Application.ValueObjects.HATEOAS;
 using OpenId3as.DivulgacaoONGs.Application.ViewModels.Page;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
 {
@@ -19,34 +22,131 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
             _howToHelpAppService = howToHelpAppService;
         }
 
-        [HttpGet]
-        public IEnumerable<HowToHelpViewModel> Get()
+        [HttpGet(Name = "GetAllHowToHelp")]
+        [ProducesResponseType(201, Type = typeof(ItemsLinkContainer<HowToHelpViewModel>))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        public ItemsLinkContainer<HowToHelpViewModel> Get()
         {
-            return _howToHelpAppService.GetAll();
+            var obj = _howToHelpAppService.GetAll().ToList();
+            obj.ForEach(x => x.AddRangeLink(CreateLinks(Method.Get, x)));
+            var result = new ItemsLinkContainer<HowToHelpViewModel>()
+            {
+                Items = obj
+            };
+            result.AddRangeLink(CreateLinks(Method.GetAll));
+            return result;
         }
 
-        [HttpGet("{id}")]
-        public HowToHelpViewModel Get(Int64 id)
+        [HttpGet("{id}", Name = "GetHowToHelpById")]
+        [ProducesResponseType(201, Type = typeof(HowToHelpViewModel))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(404)]
+        public IActionResult Get(long id)
         {
-            return _howToHelpAppService.GetById(id);
+            var obj = _howToHelpAppService.GetById(id);
+            if (obj != null)
+            {
+                obj.AddRangeLink(CreateLinks(Method.Get, obj));
+                return Ok(obj);
+            }
+            else
+                return BadRequest();
         }
 
-        [HttpPost]
+        [HttpPost(Name = "InsertHowToHelp")]
+        [ProducesResponseType(201, Type = typeof(HowToHelpViewModel))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public HowToHelpViewModel Post([FromBody]HowToHelpViewModel howToHelp)
         {
-            return _howToHelpAppService.Add(howToHelp);
+            howToHelp = _howToHelpAppService.Add(howToHelp);
+            howToHelp.AddRangeLink(CreateLinks(Method.Post, howToHelp));
+            return howToHelp;
         }
 
-        [HttpPut("{id}")]
-        public HowToHelpViewModel Put(Int64 id, [FromBody]HowToHelpViewModel howToHelp)
+        [HttpPut("{id}", Name = "UpdateHowToHelp")]
+        [ProducesResponseType(201, Type = typeof(HowToHelpViewModel))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(404)]
+        public IActionResult Put(long id, [FromBody]HowToHelpViewModel howToHelp)
         {
-            return _howToHelpAppService.Update(howToHelp);
+            if (_howToHelpAppService.GetById(howToHelp.Id).Id != 0)
+            {
+                howToHelp = _howToHelpAppService.Update(howToHelp);
+                howToHelp.AddRangeLink(CreateLinks(Method.Put, howToHelp));
+                return Ok(howToHelp);
+            }
+            else
+                return BadRequest();
         }
 
-        [HttpDelete("{id}")]
-        public void Delete(Int64 id)
+        [HttpDelete("{id}", Name = "DeleteHowToHelp")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(404)]
+        public IActionResult Delete(long id)
         {
-            _howToHelpAppService.Delete(id);
+            if (_howToHelpAppService.GetById(id).Id != 0)
+            {
+                _howToHelpAppService.Delete(id);
+                return NoContent();
+            }
+            else
+                return BadRequest();
+        }
+
+        private IEnumerable<Link> CreateLinks(Method method, HowToHelpViewModel obj = null)
+        {
+            var linkContainer = new LinkContainer();
+            if (Url != null)
+            {
+                var getAll = new Link() { Method = "GET", Rel = "get all 'how to help's", Href = Url.Link("GetAllHowToHelp", new { }) };
+                var insert = new Link() { Method = "POST", Rel = "insert 'how to help'", Href = Url.Link("InsertHowToHelp", new { }) };
+
+                var getById = new Link();
+                var update = new Link();
+                var delete = new Link();
+
+                if (obj != null)
+                {
+                    getById = new Link() { Method = "GET", Rel = "get 'how to help' by id", Href = Url.Link("GetHowToHelpById", new { id = obj.Id }) };
+                    update = new Link() { Method = "PUT", Rel = "update 'how to help'", Href = Url.Link("UpdateHowToHelp", new { id = obj.Id }) };
+                    delete = new Link() { Method = "DELETE", Rel = "delete 'how to help'", Href = Url.Link("DeleteHowToHelp", new { id = obj.Id }) };
+                }
+
+                switch (method)
+                {
+                    case Method.GetAll:
+                        linkContainer.AddLink(getAll);
+                        linkContainer.AddLink(insert);
+                        break;
+                    case Method.Get:
+                        linkContainer.AddLink(getById);
+                        linkContainer.AddLink(update);
+                        linkContainer.AddLink(delete);
+                        break;
+                    case Method.Post:
+                        linkContainer.AddLink(insert);
+                        linkContainer.AddLink(getById);
+                        linkContainer.AddLink(update);
+                        linkContainer.AddLink(delete);
+                        break;
+                    case Method.Put:
+                        linkContainer.AddLink(update);
+                        linkContainer.AddLink(getById);
+                        linkContainer.AddLink(delete);
+                        break;
+                }
+                linkContainer.Links[0].Rel = "self";
+            }
+            return linkContainer.Links;
         }
     }
 }

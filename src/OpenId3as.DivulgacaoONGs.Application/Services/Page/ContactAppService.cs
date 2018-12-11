@@ -29,7 +29,7 @@ namespace OpenId3as.DivulgacaoONGs.Application.Services.Page
             return contactViewModel;
         }
 
-        public void Delete(Int64 id)
+        public void Delete(long id)
         {
             _contactService.Delete(id);
         }
@@ -45,7 +45,7 @@ namespace OpenId3as.DivulgacaoONGs.Application.Services.Page
             return _mapper.Map<IEnumerable<Contact>, IEnumerable<ContactViewModel>>(_contactService.GetAll());
         }
 
-        public ContactViewModel GetById(Int64 id)
+        public ContactViewModel GetById(long id)
         {
             return _mapper.Map<Contact, ContactViewModel>(_contactService.GetById(id));
         }

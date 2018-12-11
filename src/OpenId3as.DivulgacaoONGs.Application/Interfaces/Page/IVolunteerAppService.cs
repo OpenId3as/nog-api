@@ -8,8 +8,8 @@ namespace OpenId3as.DivulgacaoONGs.Application.Interfaces.Page
     {
         VolunteerViewModel Add(VolunteerViewModel volunteerViewModel);
         VolunteerViewModel Update(VolunteerViewModel volunteerViewModel);
-        VolunteerViewModel GetById(Int64 id);
+        VolunteerViewModel GetById(long id);
         IEnumerable<VolunteerViewModel> GetAll();
-        void Delete(Int64 id);
+        void Delete(long id);
     }
 }

@@ -20,7 +20,7 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Services.Collaborators
             return _collaboratorRepository.Add(collaborator);
         }
 
-        public void Delete(Int64 id)
+        public void Delete(long id)
         {
             _collaboratorRepository.Delete(id);
         }
@@ -36,7 +36,7 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Services.Collaborators
             return _collaboratorRepository.GetAll();
         }
 
-        public Collaborator GetById(Int64 id)
+        public Collaborator GetById(long id)
         {
             return _collaboratorRepository.GetById(id);
         }

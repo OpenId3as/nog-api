@@ -8,9 +8,9 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Interfaces.Services.Page
     {
         void Add(Volunteer volunteer);
         void AddRange(IEnumerable<Volunteer> volunteer);
-        void Update(Volunteer volunteer, Int64 id);
-        void Delete(Int64 id);
-        Volunteer GetById(Int64 id);
+        void Update(Volunteer volunteer, long id);
+        void Delete(long id);
+        Volunteer GetById(long id);
         IEnumerable<Volunteer> GetAll();
     }
 }

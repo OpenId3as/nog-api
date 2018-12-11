@@ -9,8 +9,8 @@ namespace OpenId3as.DivulgacaoONGs.Application.ViewModels.Collaborators
 
         }
 
-        public Int64 Id { get; set; }
-        public Int64 CollaboratorId { get; set; }
+        public long Id { get; set; }
+        public long CollaboratorId { get; set; }
         public int PostalCode { get; set; }
         public string Name { get; set; }
         public int Number { get; set; }

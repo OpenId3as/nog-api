@@ -8,8 +8,8 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Interfaces.Services
     {
         Volunteer Add(Volunteer volunteer);
         Volunteer Update(Volunteer volunteer);
-        Volunteer GetById(Int64 id);
+        Volunteer GetById(long id);
         IEnumerable<Volunteer> GetAll();
-        void Delete(Int64 id);
+        void Delete(long id);
     }
 }

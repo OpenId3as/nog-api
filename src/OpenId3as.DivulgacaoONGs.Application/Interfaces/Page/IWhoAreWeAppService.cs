@@ -8,8 +8,8 @@ namespace OpenId3as.DivulgacaoONGs.Application.Interfaces.Page
     {
         WhoAreWeViewModel Add(WhoAreWeViewModel whoAreWeViewModel);
         WhoAreWeViewModel Update(WhoAreWeViewModel whoAreWeViewModel);
-        WhoAreWeViewModel GetById(Int64 id);
+        WhoAreWeViewModel GetById(long id);
         IEnumerable<WhoAreWeViewModel> GetAll();
-        void Delete(Int64 id);
+        void Delete(long id);
     }
 }

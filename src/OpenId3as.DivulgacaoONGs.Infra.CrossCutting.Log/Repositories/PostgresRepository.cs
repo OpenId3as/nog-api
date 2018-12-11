@@ -26,7 +26,7 @@ namespace OpenId3as.DivulgacaoONGs.Infra.CrossCutting.Log.Repositories
             return obj;
         }
 
-        public virtual void Delete(Int64 id)
+        public virtual void Delete(long id)
         {
             DbSet.Remove(DbSet.Find(id));
             SaveChanges();
@@ -44,7 +44,7 @@ namespace OpenId3as.DivulgacaoONGs.Infra.CrossCutting.Log.Repositories
             return DbSet.ToList();
         }
 
-        public virtual TEntity GetById(Int64 id)
+        public virtual TEntity GetById(long id)
         {
             return DbSet.Find(id);
         }

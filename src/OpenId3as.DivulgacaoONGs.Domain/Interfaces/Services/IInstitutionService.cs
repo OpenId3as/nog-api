@@ -8,8 +8,8 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Interfaces.Services
     {
         Institution Add(Institution institution);
         Institution Update(Institution institution);
-        Institution GetById(Int64 id);
+        Institution GetById(long id);
         IEnumerable<Institution> GetAll();
-        void Delete(Int64 id);
+        void Delete(long id);
     }
 }

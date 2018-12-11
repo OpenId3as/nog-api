@@ -8,8 +8,8 @@ namespace OpenId3as.DivulgacaoONGs.Application.Interfaces.Page
     {
         HowToHelpViewModel Add(HowToHelpViewModel howToHelpViewModel);
         HowToHelpViewModel Update(HowToHelpViewModel howToHelpViewModel);
-        HowToHelpViewModel GetById(Int64 id);
+        HowToHelpViewModel GetById(long id);
         IEnumerable<HowToHelpViewModel> GetAll();
-        void Delete(Int64 id);
+        void Delete(long id);
     }
 }

@@ -4,7 +4,7 @@ using OpenId3as.DivulgacaoONGs.Application.Interfaces.Page;
 using OpenId3as.DivulgacaoONGs.Application.ValueObjects.Enum;
 using OpenId3as.DivulgacaoONGs.Application.ValueObjects.HATEOAS;
 using OpenId3as.DivulgacaoONGs.Application.ViewModels.Page;
-using System.Collections.Generic;
+using OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.HyperMedia;
 using System.Linq;
 
 namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
@@ -15,10 +15,13 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
     {
         private readonly ILogoAppService _logoAppService;
         private readonly IDistributedCache _cache;
-        public LogoController(IDistributedCache cache, ILogoAppService logoAppService)
+        private readonly LogoEnricher _logoEnricher;
+
+        public LogoController(IDistributedCache cache, ILogoAppService logoAppService, IUrlHelper urlHelper)
         {
             _cache = cache;
             _logoAppService = logoAppService;
+            _logoEnricher = new LogoEnricher(urlHelper);
         }
 
         [HttpGet(Name = "GetAllLogos")]
@@ -29,12 +32,12 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         public ItemsLinkContainer<LogoViewModel> Get()
         {
             var logos = _logoAppService.GetAll().ToList();
-            logos.ForEach(x => x.AddRangeLink(CreateLinks(Method.Get, x)));
+            logos.ForEach(x => x.AddRangeLink(_logoEnricher.CreateLinks(Method.Get, x)));
             var result = new ItemsLinkContainer<LogoViewModel>()
             {
                 Items = logos
             };
-            result.AddRangeLink(CreateLinks(Method.GetAll));
+            result.AddRangeLink(_logoEnricher.CreateLinks(Method.GetAll));
             return result;
         }
 
@@ -49,7 +52,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
             var logo = _logoAppService.GetById(id);
             if (logo != null)
             {
-                logo.AddRangeLink(CreateLinks(Method.Get, logo));
+                logo.AddRangeLink(_logoEnricher.CreateLinks(Method.Get, logo));
                 return Ok(logo);
             }
             else
@@ -63,7 +66,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         public LogoViewModel Post([FromBody]LogoViewModel logo)
         {
             logo = _logoAppService.Add(logo);
-            logo.AddRangeLink(CreateLinks(Method.Post, logo));
+            logo.AddRangeLink(_logoEnricher.CreateLinks(Method.Post, logo));
             return logo;
         }
 
@@ -78,7 +81,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
             if (_logoAppService.GetById(logo.Id).Id != 0)
             {
                 logo = _logoAppService.Update(logo);
-                logo.AddRangeLink(CreateLinks(Method.Put, logo));
+                logo.AddRangeLink(_logoEnricher.CreateLinks(Method.Put, logo));
                 return Ok(logo);
             }
             else
@@ -99,53 +102,6 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
             }
             else
                 return BadRequest();
-        }
-
-        private IEnumerable<Link> CreateLinks(Method method, LogoViewModel logo = null)
-        {
-            var linkContainer = new LinkContainer();
-            if (Url != null)
-            {
-                var getAll = new Link() { Method = "GET", Rel = "get all logos", Href = Url.Link("GetAllLogos", new { }) };
-                var insert = new Link() { Method = "POST", Rel = "insert logo", Href = Url.Link("InsertLogo", new { }) };
-
-                var getById = new Link();
-                var update = new Link();
-                var delete = new Link();
-
-                if (logo != null)
-                {
-                    getById = new Link() { Method = "GET", Rel = "get logo by id", Href = Url.Link("GetLogoById", new { id = logo.Id }) };
-                    update = new Link() { Method = "PUT", Rel = "update logo", Href = Url.Link("UpdateLogo", new { id = logo.Id }) };
-                    delete = new Link() { Method = "DELETE", Rel = "delete logo", Href = Url.Link("DeleteLogo", new { id = logo.Id }) };
-                }
-
-                switch (method)
-                {
-                    case Method.GetAll:
-                        linkContainer.AddLink(getAll);
-                        linkContainer.AddLink(insert);
-                        break;
-                    case Method.Get:
-                        linkContainer.AddLink(getById);
-                        linkContainer.AddLink(update);
-                        linkContainer.AddLink(delete);
-                        break;
-                    case Method.Post:
-                        linkContainer.AddLink(insert);
-                        linkContainer.AddLink(getById);
-                        linkContainer.AddLink(update);
-                        linkContainer.AddLink(delete);
-                        break;
-                    case Method.Put:
-                        linkContainer.AddLink(update);
-                        linkContainer.AddLink(getById);
-                        linkContainer.AddLink(delete);
-                        break;
-                }
-                linkContainer.Links[0].Rel = "self";
-            }
-            return linkContainer.Links;
         }
     }
 }

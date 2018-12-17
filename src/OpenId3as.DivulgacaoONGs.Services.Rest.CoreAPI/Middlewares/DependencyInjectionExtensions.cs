@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -83,6 +86,15 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Middlewares
                     $"{configuration.GetConnectionString("ST_REDIS_NOG")}, abortConnect=false, syncTimeout=10000"
                 );
             services.AddDataProtection().PersistKeysToRedis(redis, "key-nog-api");
+
+            //HyperMedia
+            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+            services.AddScoped<IUrlHelper>(x =>
+            {
+                var actionContext = x.GetRequiredService<IActionContextAccessor>().ActionContext;
+                var factory = x.GetRequiredService<IUrlHelperFactory>();
+                return factory.GetUrlHelper(actionContext);
+            });
 
             //Dependency Injections
             NativeInjectorBootStrapper.RegisterServices(services);

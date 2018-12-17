@@ -4,7 +4,7 @@ using OpenId3as.DivulgacaoONGs.Application.Interfaces;
 using OpenId3as.DivulgacaoONGs.Application.ValueObjects.Enum;
 using OpenId3as.DivulgacaoONGs.Application.ValueObjects.HATEOAS;
 using OpenId3as.DivulgacaoONGs.Application.ViewModels.Collaborators;
-using System.Collections.Generic;
+using OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.HyperMedia;
 using System.Linq;
 
 namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
@@ -15,12 +15,15 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
     {
         private readonly ICollaboratorAppService _collaboratorAppService;
         private readonly IDistributedCache _cache;
+        private readonly CollaboratorEnricher _collaboratorEnricher;
 
         public CollaboratorController(IDistributedCache cache,
-                                    ICollaboratorAppService collaboratorAppService)
+                                    ICollaboratorAppService collaboratorAppService,
+                                    IUrlHelper urlHelper)
         {
             _cache = cache;
             _collaboratorAppService = collaboratorAppService;
+            _collaboratorEnricher = new CollaboratorEnricher(urlHelper);
         }
 
         [HttpGet(Name = "GetAllCollaborators")]
@@ -31,12 +34,12 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         public ItemsLinkContainer<CollaboratorViewModel> Get()
         {
             var collaborators = _collaboratorAppService.GetAll().ToList();
-            collaborators.ForEach(x => x.AddRangeLink(CreateLinks(Method.Get, x)));
+            collaborators.ForEach(x => x.AddRangeLink(_collaboratorEnricher.CreateLinks(Method.Get, x)));
             var result = new ItemsLinkContainer<CollaboratorViewModel>()
             {
                 Items = collaborators
             };
-            result.AddRangeLink(CreateLinks(Method.GetAll));
+            result.AddRangeLink(_collaboratorEnricher.CreateLinks(Method.GetAll));
             return result;
         }
 
@@ -54,7 +57,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
             var collaborator = _collaboratorAppService.GetById(id);
             if (collaborator != null)
             {
-                collaborator.AddRangeLink(CreateLinks(Method.Get, collaborator));
+                collaborator.AddRangeLink(_collaboratorEnricher.CreateLinks(Method.Get, collaborator));
                 return Ok(collaborator);
             }
             else
@@ -68,7 +71,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         public CollaboratorViewModel Post([FromBody]CollaboratorViewModel collaborator)
         {
             collaborator = _collaboratorAppService.Add(collaborator);
-            collaborator.AddRangeLink(CreateLinks(Method.Post, collaborator));
+            collaborator.AddRangeLink(_collaboratorEnricher.CreateLinks(Method.Post, collaborator));
             return collaborator;
         }
 
@@ -83,7 +86,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
             if (_collaboratorAppService.GetById(collaborator.Id).Id != 0)
             {
                 collaborator = _collaboratorAppService.Update(collaborator);
-                collaborator.AddRangeLink(CreateLinks(Method.Put, collaborator));
+                collaborator.AddRangeLink(_collaboratorEnricher.CreateLinks(Method.Put, collaborator));
                 return Ok(collaborator);
             }
             else
@@ -104,53 +107,6 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
             }
             else
                 return BadRequest();
-        }
-
-        private IEnumerable<Link> CreateLinks(Method method, CollaboratorViewModel collaborator = null)
-        {
-            var linkContainer = new LinkContainer();
-            if(Url != null)
-            {
-                var getAll = new Link() { Method = "GET", Rel = "get all collaborators", Href = Url.Link("GetAllCollaborators", new { }) };
-                var insert = new Link() { Method = "POST", Rel = "insert collaborator", Href = Url.Link("InsertCollaborator", new { }) };
-
-                var getById = new Link();
-                var update = new Link();
-                var delete = new Link();
-
-                if (collaborator != null)
-                {
-                    getById = new Link() { Method = "GET", Rel = "get collaborator by id", Href = Url.Link("GetCollaboratorById", new { id = collaborator.Id }) };
-                    update = new Link() { Method = "PUT", Rel = "update collaborator", Href = Url.Link("UpdateCollaborator", new { id = collaborator.Id }) };
-                    delete = new Link() { Method = "DELETE", Rel = "delete collaborator", Href = Url.Link("DeleteCollaborator", new { id = collaborator.Id }) };
-                }
-
-                switch (method)
-                {
-                    case Method.GetAll:
-                        linkContainer.AddLink(getAll);
-                        linkContainer.AddLink(insert);
-                        break;
-                    case Method.Get:
-                        linkContainer.AddLink(getById);
-                        linkContainer.AddLink(update);
-                        linkContainer.AddLink(delete);
-                        break;
-                    case Method.Post:
-                        linkContainer.AddLink(insert);
-                        linkContainer.AddLink(getById);
-                        linkContainer.AddLink(update);
-                        linkContainer.AddLink(delete);
-                        break;
-                    case Method.Put:
-                        linkContainer.AddLink(update);
-                        linkContainer.AddLink(getById);
-                        linkContainer.AddLink(delete);
-                        break;
-                }
-                linkContainer.Links[0].Rel = "self";
-            }
-            return linkContainer.Links;
         }
     }
 }

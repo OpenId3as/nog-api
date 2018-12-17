@@ -4,6 +4,7 @@ using OpenId3as.DivulgacaoONGs.Application.Interfaces.Page;
 using OpenId3as.DivulgacaoONGs.Application.ValueObjects.Enum;
 using OpenId3as.DivulgacaoONGs.Application.ValueObjects.HATEOAS;
 using OpenId3as.DivulgacaoONGs.Application.ViewModels.Page;
+using OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.HyperMedia;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,10 +16,13 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
     {
         private readonly IHomeAppService _homeAppService;
         private readonly IDistributedCache _cache;
-        public HomeController(IDistributedCache cache, IHomeAppService homeAppService)
+        private readonly HomeEnricher _homeEnricher;
+
+        public HomeController(IDistributedCache cache, IHomeAppService homeAppService, IUrlHelper urlHelper)
         {
             _cache = cache;
             _homeAppService = homeAppService;
+            _homeEnricher = new HomeEnricher(urlHelper);
         }
 
         [HttpGet(Name = "GetAllHomes")]
@@ -29,12 +33,12 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         public ItemsLinkContainer<HomeViewModel> Get()
         {
             var obj = _homeAppService.GetAll().ToList();
-            obj.ForEach(x => x.AddRangeLink(CreateLinks(Method.Get, x)));
+            obj.ForEach(x => x.AddRangeLink(_homeEnricher.CreateLinks(Method.Get, x)));
             var result = new ItemsLinkContainer<HomeViewModel>()
             {
                 Items = obj
             };
-            result.AddRangeLink(CreateLinks(Method.GetAll));
+            result.AddRangeLink(_homeEnricher.CreateLinks(Method.GetAll));
             return result;
         }
 
@@ -49,7 +53,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
             var home = _homeAppService.GetById(id);
             if (home != null)
             {
-                home.AddRangeLink(CreateLinks(Method.Get, home));
+                home.AddRangeLink(_homeEnricher.CreateLinks(Method.Get, home));
                 return Ok(home);
             }
             else
@@ -63,7 +67,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         public HomeViewModel Post([FromBody]HomeViewModel home)
         {
             home = _homeAppService.Add(home);
-            home.AddRangeLink(CreateLinks(Method.Post, home));
+            home.AddRangeLink(_homeEnricher.CreateLinks(Method.Post, home));
             return home;
         }
 
@@ -78,7 +82,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
             if (_homeAppService.GetById(home.Id).Id != 0)
             {
                 home = _homeAppService.Update(home);
-                home.AddRangeLink(CreateLinks(Method.Put, home));
+                home.AddRangeLink(_homeEnricher.CreateLinks(Method.Put, home));
                 return Ok(home);
             }
             else
@@ -99,53 +103,6 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
             }
             else
                 return BadRequest();
-        }
-
-        private IEnumerable<Link> CreateLinks(Method method, HomeViewModel home = null)
-        {
-            var linkContainer = new LinkContainer();
-            if (Url != null)
-            {
-                var getAll = new Link() { Method = "GET", Rel = "get all homes", Href = Url.Link("GetAllHomes", new { }) };
-                var insert = new Link() { Method = "POST", Rel = "insert home", Href = Url.Link("InsertHome", new { }) };
-
-                var getById = new Link();
-                var update = new Link();
-                var delete = new Link();
-
-                if (home != null)
-                {
-                    getById = new Link() { Method = "GET", Rel = "get home by id", Href = Url.Link("GetHomeById", new { id = home.Id }) };
-                    update = new Link() { Method = "PUT", Rel = "update home", Href = Url.Link("UpdateHome", new { id = home.Id }) };
-                    delete = new Link() { Method = "DELETE", Rel = "delete home", Href = Url.Link("DeleteHome", new { id = home.Id }) };
-                }
-
-                switch (method)
-                {
-                    case Method.GetAll:
-                        linkContainer.AddLink(getAll);
-                        linkContainer.AddLink(insert);
-                        break;
-                    case Method.Get:
-                        linkContainer.AddLink(getById);
-                        linkContainer.AddLink(update);
-                        linkContainer.AddLink(delete);
-                        break;
-                    case Method.Post:
-                        linkContainer.AddLink(insert);
-                        linkContainer.AddLink(getById);
-                        linkContainer.AddLink(update);
-                        linkContainer.AddLink(delete);
-                        break;
-                    case Method.Put:
-                        linkContainer.AddLink(update);
-                        linkContainer.AddLink(getById);
-                        linkContainer.AddLink(delete);
-                        break;
-                }
-                linkContainer.Links[0].Rel = "self";
-            }
-            return linkContainer.Links;
         }
     }
 }

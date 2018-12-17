@@ -2,7 +2,7 @@
 {
     public class Language : MongoEntity
     {
-        public string Type { get; set; }
+        public string Lang { get; set; }
         public DataPage Data { get; set; }
     }
 }

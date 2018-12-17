@@ -4,7 +4,7 @@ using OpenId3as.DivulgacaoONGs.Application.Interfaces.Page;
 using OpenId3as.DivulgacaoONGs.Application.ValueObjects.Enum;
 using OpenId3as.DivulgacaoONGs.Application.ValueObjects.HATEOAS;
 using OpenId3as.DivulgacaoONGs.Application.ViewModels.Page;
-using System.Collections.Generic;
+using OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.HyperMedia;
 using System.Linq;
 
 namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
@@ -15,10 +15,13 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
     {
         private readonly IContactAppService _contactAppService;
         private readonly IDistributedCache _cache;
-        public ContactController(IDistributedCache cache, IContactAppService contactAppService)
+        private readonly ContactEnricher _contactEnricher;
+
+        public ContactController(IDistributedCache cache, IContactAppService contactAppService, IUrlHelper urlHelper)
         {
             _cache = cache;
             _contactAppService = contactAppService;
+            _contactEnricher = new ContactEnricher(urlHelper);
         }
 
         [HttpGet(Name = "GetAllContacts")]
@@ -29,12 +32,12 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         public ItemsLinkContainer<ContactViewModel> Get()
         {
             var contact = _contactAppService.GetAll().ToList();
-            contact.ForEach(x => x.AddRangeLink(CreateLinks(Method.Get, x)));
+            contact.ForEach(x => x.AddRangeLink(_contactEnricher.CreateLinks(Method.Get, x)));
             var result = new ItemsLinkContainer<ContactViewModel>()
             {
                 Items = contact
             };
-            result.AddRangeLink(CreateLinks(Method.GetAll));
+            result.AddRangeLink(_contactEnricher.CreateLinks(Method.GetAll));
             return result;
         }
 
@@ -49,7 +52,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
             var contact = _contactAppService.GetById(id);
             if (contact != null)
             {
-                contact.AddRangeLink(CreateLinks(Method.Get, contact));
+                contact.AddRangeLink(_contactEnricher.CreateLinks(Method.Get, contact));
                 return Ok(contact);
             }
             else
@@ -63,7 +66,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         public ContactViewModel Post([FromBody]ContactViewModel contact)
         {
             contact = _contactAppService.Add(contact);
-            contact.AddRangeLink(CreateLinks(Method.Post, contact));
+            contact.AddRangeLink(_contactEnricher.CreateLinks(Method.Post, contact));
             return contact;
         }
 
@@ -78,7 +81,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
             if (_contactAppService.GetById(id).Id != 0)
             {
                 contact = _contactAppService.Update(contact);
-                contact.AddRangeLink(CreateLinks(Method.Put, contact));
+                contact.AddRangeLink(_contactEnricher.CreateLinks(Method.Put, contact));
                 return Ok(contact);
             }
             else
@@ -99,58 +102,6 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
             }
             else
                 return BadRequest();
-        }
-
-        private IEnumerable<Link> CreateLinks(Method method, ContactViewModel contact = null)
-        {
-            var linkContainer = new LinkContainer();
-            if (Url != null)
-            {
-                var getAll = new Link() { Method = "GET", Rel = "get all contacts", Href = Url.Link("GetAllContacts", new { }) };
-                var insert = new Link() { Method = "POST", Rel = "insert contact", Href = Url.Link("InsertContact", new { }) };
-
-                var getById = new Link();
-                var update = new Link();
-                var delete = new Link();
-
-                if (contact != null)
-                {
-                    getById = new Link() { Method = "GET", Rel = "get contact by id", Href = Url.Link("GetContactById", new { id = contact.Id }) };
-                    update = new Link() { Method = "PUT", Rel = "update contact", Href = Url.Link("UpdateContact", new { id = contact.Id }) };
-                    delete = new Link() { Method = "DELETE", Rel = "delete contact", Href = Url.Link("DeleteContact", new { id = contact.Id }) };
-                }
-
-                switch (method)
-                {
-                    case Method.GetAll:
-                        linkContainer.AddLink(getAll);
-                        linkContainer.AddLink(insert);
-                        break;
-                    case Method.Get:
-                        linkContainer.AddLink(getById);
-                        linkContainer.AddLink(update);
-                        linkContainer.AddLink(delete);
-                        break;
-                    case Method.Post:
-                        linkContainer.AddLink(insert);
-                        linkContainer.AddLink(getById);
-                        linkContainer.AddLink(update);
-                        linkContainer.AddLink(delete);
-                        break;
-                    case Method.Put:
-                        linkContainer.AddLink(update);
-                        linkContainer.AddLink(getById);
-                        linkContainer.AddLink(delete);
-                        break;
-                    case Method.Delete:
-                        linkContainer.AddLink(delete);
-                        linkContainer.AddLink(getById);
-                        linkContainer.AddLink(update);
-                        break;
-                }
-                linkContainer.Links[0].Rel = "self";
-            }
-            return linkContainer.Links;
         }
     }
 }

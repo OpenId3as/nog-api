@@ -4,7 +4,7 @@ using OpenId3as.DivulgacaoONGs.Application.Interfaces.Page;
 using OpenId3as.DivulgacaoONGs.Application.ValueObjects.Enum;
 using OpenId3as.DivulgacaoONGs.Application.ValueObjects.HATEOAS;
 using OpenId3as.DivulgacaoONGs.Application.ViewModels.Page;
-using System.Collections.Generic;
+using OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.HyperMedia;
 using System.Linq;
 
 namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
@@ -15,10 +15,13 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
     {
         private readonly IWhoAreWeAppService _whoAreWeAppService;
         private readonly IDistributedCache _cache;
-        public WhoAreWeController(IDistributedCache cache, IWhoAreWeAppService whoAreWeAppService)
+        private readonly WhoAreWeEnricher _whoAreWeEnricher;
+
+        public WhoAreWeController(IDistributedCache cache, IWhoAreWeAppService whoAreWeAppService, IUrlHelper urlHelper)
         {
             _cache = cache;
             _whoAreWeAppService = whoAreWeAppService;
+            _whoAreWeEnricher = new WhoAreWeEnricher(urlHelper);
         }
 
         [HttpGet(Name = "GetAllWhoAreWe")]
@@ -29,7 +32,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         public ItemsLinkContainer<WhoAreWeViewModel> Get()
         {
             var whoAreWe = _whoAreWeAppService.GetAll().ToList();
-            whoAreWe.ForEach(x => x.AddRangeLink(CreateLinks(Method.Get, x)));
+            whoAreWe.ForEach(x => x.AddRangeLink(_whoAreWeEnricher.CreateLinks(Method.Get, x)));
             var result = new ItemsLinkContainer<WhoAreWeViewModel>()
             {
                 Items = whoAreWe
@@ -49,7 +52,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
             var whoAreWe = _whoAreWeAppService.GetById(id);
             if (whoAreWe != null)
             {
-                whoAreWe.AddRangeLink(CreateLinks(Method.Get, whoAreWe));
+                whoAreWe.AddRangeLink(_whoAreWeEnricher.CreateLinks(Method.Get, whoAreWe));
                 return Ok(whoAreWe);
             }
             else
@@ -63,7 +66,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         public WhoAreWeViewModel Post([FromBody]WhoAreWeViewModel whoAreWe)
         {
             whoAreWe = _whoAreWeAppService.Add(whoAreWe);
-            whoAreWe.AddRangeLink(CreateLinks(Method.Post, whoAreWe));
+            whoAreWe.AddRangeLink(_whoAreWeEnricher.CreateLinks(Method.Post, whoAreWe));
             return whoAreWe;
         }
 
@@ -78,7 +81,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
             if (_whoAreWeAppService.GetById(whoAreWe.Id).Id != 0)
             {
                 whoAreWe = _whoAreWeAppService.Update(whoAreWe);
-                whoAreWe.AddRangeLink(CreateLinks(Method.Put, whoAreWe));
+                whoAreWe.AddRangeLink(_whoAreWeEnricher.CreateLinks(Method.Put, whoAreWe));
                 return Ok(whoAreWe);
             }
             else
@@ -99,53 +102,6 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
             }
             else
                 return BadRequest();
-        }
-
-        private IEnumerable<Link> CreateLinks(Method method, WhoAreWeViewModel obj = null)
-        {
-            var linkContainer = new LinkContainer();
-            if (Url != null)
-            {
-                var getAll = new Link() { Method = "GET", Rel = "get all 'who are we'", Href = Url.Link("GetAllWhoAreWe", new { }) };
-                var insert = new Link() { Method = "POST", Rel = "insert ''who are we''", Href = Url.Link("InsertWhoAreWe", new { }) };
-
-                var getById = new Link();
-                var update = new Link();
-                var delete = new Link();
-
-                if (obj != null)
-                {
-                    getById = new Link() { Method = "GET", Rel = "get ''who are we'' by id", Href = Url.Link("GetWhoAreWeById", new { id = obj.Id }) };
-                    update = new Link() { Method = "PUT", Rel = "update ''who are we''", Href = Url.Link("UpdateWhoAreWe", new { id = obj.Id }) };
-                    delete = new Link() { Method = "DELETE", Rel = "delete ''who are we''", Href = Url.Link("DeleteWhoAreWe", new { id = obj.Id }) };
-                }
-
-                switch (method)
-                {
-                    case Method.GetAll:
-                        linkContainer.AddLink(getAll);
-                        linkContainer.AddLink(insert);
-                        break;
-                    case Method.Get:
-                        linkContainer.AddLink(getById);
-                        linkContainer.AddLink(update);
-                        linkContainer.AddLink(delete);
-                        break;
-                    case Method.Post:
-                        linkContainer.AddLink(insert);
-                        linkContainer.AddLink(getById);
-                        linkContainer.AddLink(update);
-                        linkContainer.AddLink(delete);
-                        break;
-                    case Method.Put:
-                        linkContainer.AddLink(update);
-                        linkContainer.AddLink(getById);
-                        linkContainer.AddLink(delete);
-                        break;
-                }
-                linkContainer.Links[0].Rel = "self";
-            }
-            return linkContainer.Links;
         }
     }
 }

@@ -4,7 +4,7 @@ using OpenId3as.DivulgacaoONGs.Application.Interfaces.Page;
 using OpenId3as.DivulgacaoONGs.Application.ValueObjects.Enum;
 using OpenId3as.DivulgacaoONGs.Application.ValueObjects.HATEOAS;
 using OpenId3as.DivulgacaoONGs.Application.ViewModels.Page;
-using System.Collections.Generic;
+using OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.HyperMedia;
 using System.Linq;
 
 namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
@@ -15,10 +15,13 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
     {
         private readonly ILanguageAppService _languageAppService;
         private readonly IDistributedCache _cache;
-        public LanguageController(IDistributedCache cache, ILanguageAppService languageAppService)
+        private readonly LanguageEnricher _languageEnricher;
+
+        public LanguageController(IDistributedCache cache, ILanguageAppService languageAppService, IUrlHelper urlHelper)
         {
             _cache = cache;
             _languageAppService = languageAppService;
+            _languageEnricher = new LanguageEnricher(urlHelper);
         }
 
         [HttpGet(Name = "GetAllLanguages")]
@@ -29,12 +32,12 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         public ItemsLinkContainer<LanguageViewModel> Get()
         {
             var languages = _languageAppService.GetAll().ToList();
-            languages.ForEach(x => x.AddRangeLink(CreateLinks(Method.Get, x)));
+            languages.ForEach(x => x.AddRangeLink(_languageEnricher.CreateLinks(Method.Get, x)));
             var result = new ItemsLinkContainer<LanguageViewModel>()
             {
                 Items = languages
             };
-            result.AddRangeLink(CreateLinks(Method.GetAll));
+            result.AddRangeLink(_languageEnricher.CreateLinks(Method.GetAll));
             return result;
         }
 
@@ -49,7 +52,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
             var language = _languageAppService.GetById(id);
             if (language != null)
             {
-                language.AddRangeLink(CreateLinks(Method.Get, language));
+                language.AddRangeLink(_languageEnricher.CreateLinks(Method.Get, language));
                 return Ok(language);
             }
             else
@@ -63,7 +66,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         public LanguageViewModel Post([FromBody]LanguageViewModel language)
         {
             language = _languageAppService.Add(language);
-            language.AddRangeLink(CreateLinks(Method.Post, language));
+            language.AddRangeLink(_languageEnricher.CreateLinks(Method.Post, language));
             return language;
         }
 
@@ -78,7 +81,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
             if (_languageAppService.GetById(language.Id).Id != 0)
             {
                 language = _languageAppService.Update(language);
-                language.AddRangeLink(CreateLinks(Method.Put, language));
+                language.AddRangeLink(_languageEnricher.CreateLinks(Method.Put, language));
                 return Ok(language);
             }
             else
@@ -99,53 +102,6 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
             }
             else
                 return BadRequest();
-        }
-
-        private IEnumerable<Link> CreateLinks(Method method, LanguageViewModel language = null)
-        {
-            var linkContainer = new LinkContainer();
-            if (Url != null)
-            {
-                var getAll = new Link() { Method = "GET", Rel = "get all languages", Href = Url.Link("GetAllLanguages", new { }) };
-                var insert = new Link() { Method = "POST", Rel = "insert language", Href = Url.Link("InsertLanguage", new { }) };
-
-                var getById = new Link();
-                var update = new Link();
-                var delete = new Link();
-
-                if (language != null)
-                {
-                    getById = new Link() { Method = "GET", Rel = "get language by id", Href = Url.Link("GetLanguageById", new { id = language.Id }) };
-                    update = new Link() { Method = "PUT", Rel = "update language", Href = Url.Link("UpdateLanguage", new { id = language.Id }) };
-                    delete = new Link() { Method = "DELETE", Rel = "delete language", Href = Url.Link("DeleteLanguage", new { id = language.Id }) };
-                }
-
-                switch (method)
-                {
-                    case Method.GetAll:
-                        linkContainer.AddLink(getAll);
-                        linkContainer.AddLink(insert);
-                        break;
-                    case Method.Get:
-                        linkContainer.AddLink(getById);
-                        linkContainer.AddLink(update);
-                        linkContainer.AddLink(delete);
-                        break;
-                    case Method.Post:
-                        linkContainer.AddLink(insert);
-                        linkContainer.AddLink(getById);
-                        linkContainer.AddLink(update);
-                        linkContainer.AddLink(delete);
-                        break;
-                    case Method.Put:
-                        linkContainer.AddLink(update);
-                        linkContainer.AddLink(getById);
-                        linkContainer.AddLink(delete);
-                        break;
-                }
-                linkContainer.Links[0].Rel = "self";
-            }
-            return linkContainer.Links;
         }
     }
 }

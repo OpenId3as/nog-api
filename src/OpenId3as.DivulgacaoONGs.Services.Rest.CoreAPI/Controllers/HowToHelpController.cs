@@ -4,8 +4,7 @@ using OpenId3as.DivulgacaoONGs.Application.Interfaces.Page;
 using OpenId3as.DivulgacaoONGs.Application.ValueObjects.Enum;
 using OpenId3as.DivulgacaoONGs.Application.ValueObjects.HATEOAS;
 using OpenId3as.DivulgacaoONGs.Application.ViewModels.Page;
-using System;
-using System.Collections.Generic;
+using OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.HyperMedia;
 using System.Linq;
 
 namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
@@ -16,10 +15,14 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
     {
         private readonly IHowToHelpAppService _howToHelpAppService;
         private readonly IDistributedCache _cache;
-        public HowToHelpController(IDistributedCache cache, IHowToHelpAppService howToHelpAppService)
+        private readonly HowToHelpEnricher _howToHelpEnricher;
+
+        public HowToHelpController(IDistributedCache cache, IHowToHelpAppService howToHelpAppService, IUrlHelper urlHelper)
         {
             _cache = cache;
             _howToHelpAppService = howToHelpAppService;
+            _howToHelpEnricher = new HowToHelpEnricher(urlHelper);
+
         }
 
         [HttpGet(Name = "GetAllHowToHelp")]
@@ -30,12 +33,12 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         public ItemsLinkContainer<HowToHelpViewModel> Get()
         {
             var obj = _howToHelpAppService.GetAll().ToList();
-            obj.ForEach(x => x.AddRangeLink(CreateLinks(Method.Get, x)));
+            obj.ForEach(x => x.AddRangeLink(_howToHelpEnricher.CreateLinks(Method.Get, x)));
             var result = new ItemsLinkContainer<HowToHelpViewModel>()
             {
                 Items = obj
             };
-            result.AddRangeLink(CreateLinks(Method.GetAll));
+            result.AddRangeLink(_howToHelpEnricher.CreateLinks(Method.GetAll));
             return result;
         }
 
@@ -50,7 +53,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
             var obj = _howToHelpAppService.GetById(id);
             if (obj != null)
             {
-                obj.AddRangeLink(CreateLinks(Method.Get, obj));
+                obj.AddRangeLink(_howToHelpEnricher.CreateLinks(Method.Get, obj));
                 return Ok(obj);
             }
             else
@@ -64,7 +67,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         public HowToHelpViewModel Post([FromBody]HowToHelpViewModel howToHelp)
         {
             howToHelp = _howToHelpAppService.Add(howToHelp);
-            howToHelp.AddRangeLink(CreateLinks(Method.Post, howToHelp));
+            howToHelp.AddRangeLink(_howToHelpEnricher.CreateLinks(Method.Post, howToHelp));
             return howToHelp;
         }
 
@@ -79,7 +82,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
             if (_howToHelpAppService.GetById(howToHelp.Id).Id != 0)
             {
                 howToHelp = _howToHelpAppService.Update(howToHelp);
-                howToHelp.AddRangeLink(CreateLinks(Method.Put, howToHelp));
+                howToHelp.AddRangeLink(_howToHelpEnricher.CreateLinks(Method.Put, howToHelp));
                 return Ok(howToHelp);
             }
             else
@@ -100,53 +103,6 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
             }
             else
                 return BadRequest();
-        }
-
-        private IEnumerable<Link> CreateLinks(Method method, HowToHelpViewModel obj = null)
-        {
-            var linkContainer = new LinkContainer();
-            if (Url != null)
-            {
-                var getAll = new Link() { Method = "GET", Rel = "get all 'how to help's", Href = Url.Link("GetAllHowToHelp", new { }) };
-                var insert = new Link() { Method = "POST", Rel = "insert 'how to help'", Href = Url.Link("InsertHowToHelp", new { }) };
-
-                var getById = new Link();
-                var update = new Link();
-                var delete = new Link();
-
-                if (obj != null)
-                {
-                    getById = new Link() { Method = "GET", Rel = "get 'how to help' by id", Href = Url.Link("GetHowToHelpById", new { id = obj.Id }) };
-                    update = new Link() { Method = "PUT", Rel = "update 'how to help'", Href = Url.Link("UpdateHowToHelp", new { id = obj.Id }) };
-                    delete = new Link() { Method = "DELETE", Rel = "delete 'how to help'", Href = Url.Link("DeleteHowToHelp", new { id = obj.Id }) };
-                }
-
-                switch (method)
-                {
-                    case Method.GetAll:
-                        linkContainer.AddLink(getAll);
-                        linkContainer.AddLink(insert);
-                        break;
-                    case Method.Get:
-                        linkContainer.AddLink(getById);
-                        linkContainer.AddLink(update);
-                        linkContainer.AddLink(delete);
-                        break;
-                    case Method.Post:
-                        linkContainer.AddLink(insert);
-                        linkContainer.AddLink(getById);
-                        linkContainer.AddLink(update);
-                        linkContainer.AddLink(delete);
-                        break;
-                    case Method.Put:
-                        linkContainer.AddLink(update);
-                        linkContainer.AddLink(getById);
-                        linkContainer.AddLink(delete);
-                        break;
-                }
-                linkContainer.Links[0].Rel = "self";
-            }
-            return linkContainer.Links;
         }
     }
 }

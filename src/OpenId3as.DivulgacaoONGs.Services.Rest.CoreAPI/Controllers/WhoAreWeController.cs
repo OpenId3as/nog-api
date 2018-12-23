@@ -37,7 +37,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
             {
                 Items = whoAreWe
             };
-            result.AddRangeLink(CreateLinks(Method.GetAll));
+            result.AddRangeLink(_whoAreWeEnricher.CreateLinks(Method.GetAll));
             return result;
         }
 

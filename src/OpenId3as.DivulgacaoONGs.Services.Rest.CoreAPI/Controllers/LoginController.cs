@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using OpenId3as.DivulgacaoONGs.Application.Interfaces;
+using OpenId3as.DivulgacaoONGs.Application.ViewModels;
 
 namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
 {
@@ -12,10 +9,19 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
     [Route("api/[controller]")]
     public class LoginController : BaseController
     {
+        private ILoginAppService _loginAppService;
+
+        public LoginController(ILoginAppService loginAppService)
+        {
+            _loginAppService = loginAppService;
+        }
+
         [AllowAnonymous]
         [HttpPost]
-        public void Post([FromBody] string value)
+        public object Post([FromBody] UserViewModel user)
         {
+            if (user == null) return BadRequest();
+            return _loginAppService.GetByLogin(user);
         }
     }
 }

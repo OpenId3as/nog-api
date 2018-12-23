@@ -26,6 +26,14 @@ namespace OpenId3as.DivulgacaoONGs.Infra.Data.Context.Mongo
             }
         }
 
+        public IMongoCollection<Banner> Banner
+        {
+            get
+            {
+                return _database.GetCollection<Banner>("Banner");
+            }
+        }
+
         public IMongoCollection<Collaborator> Collaborator
         {
             get
@@ -71,6 +79,14 @@ namespace OpenId3as.DivulgacaoONGs.Infra.Data.Context.Mongo
             get
             {
                 return _database.GetCollection<Logo>("Logo");
+            }
+        }
+
+        public IMongoCollection<Menu> Menu
+        {
+            get
+            {
+                return _database.GetCollection<Menu>("Menu");
             }
         }
 

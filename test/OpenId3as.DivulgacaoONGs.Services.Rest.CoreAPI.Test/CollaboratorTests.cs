@@ -24,7 +24,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Test
         {
             _collaboratorAppService.GetById(id).Returns<CollaboratorViewModel>(new CollaboratorViewModel { });
 
-            var collaborator = new CollaboratorController(null, _collaboratorAppService);
+            var collaborator = new CollaboratorController(null, _collaboratorAppService, null);
             var result = collaborator.Get(id);
 
             Assert.AreEqual(200, ((ObjectResult)result).StatusCode, message: "Status code is different of 200");
@@ -36,7 +36,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Test
         {
             _collaboratorAppService.GetById(id).ReturnsNull();
 
-            var collaborator = new CollaboratorController(null, _collaboratorAppService);
+            var collaborator = new CollaboratorController(null, _collaboratorAppService, null);
             var result = collaborator.Get(id);
 
             Assert.AreEqual(204, ((StatusCodeResult)result).StatusCode, message: "Status code is different of 204");

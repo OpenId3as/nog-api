@@ -1,15 +1,18 @@
 ﻿using AutoMapper;
+using OpenId3as.DivulgacaoONGs.Application.DataTransferObject.PagedSearch;
 using OpenId3as.DivulgacaoONGs.Application.Interfaces;
+using OpenId3as.DivulgacaoONGs.Application.ValueObjects.HATEOAS;
 using OpenId3as.DivulgacaoONGs.Application.ViewModels.Collaborators;
 using OpenId3as.DivulgacaoONGs.Domain.Entities.Collaborators;
 using OpenId3as.DivulgacaoONGs.Domain.Interfaces.Services;
 using OpenId3as.DivulgacaoONGs.Infra.Data.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace OpenId3as.DivulgacaoONGs.Application.Services.Collaborators
 {
-    public class CollaboratorAppService : ICollaboratorAppService
+    public class CollaboratorAppService : BaseAppService, ICollaboratorAppService
     {
         private readonly IMapper _mapper;
         private readonly ICollaboratorService _collaboratorService;
@@ -45,6 +48,45 @@ namespace OpenId3as.DivulgacaoONGs.Application.Services.Collaborators
         {
             _collaboratorService.Dispose();
             GC.SuppressFinalize(this);
+        }
+
+        public PagedSearch<CollaboratorViewModel> FindWithPagedSearch(List<SortItemDTO> sort, int limitRows = 50, int page = 0, string firstName = "", string lastName = "", string email = "", bool? active = null)
+        {
+            page = page > 0 ? page - 1 : 0;
+
+            var sortableColumns = new Dictionary<string, string>();
+            sortableColumns.Add("FirstName", "st_first_name");
+            sortableColumns.Add("LastName", "st_last_name");
+            sortableColumns.Add("Email", "st_email");
+            sortableColumns.Add("Active", "bo_active");
+
+            limitRows = this.ValidateLimitRows(limitRows);
+            page = this.ValidatePageNumber(page);
+            sort = this.ValidateSort(sortableColumns, sort);
+
+            var filters = new Dictionary<string, object>();
+            filters.Add("FirstName", firstName);
+            filters.Add("LastName", lastName);
+            filters.Add("Email", email);
+            filters.Add("Active", active);
+
+            var sortConcat = sort.Count > 0 ? sort.Select(x => string.Format("{0} {1}", x.Field, x.Direction)).Aggregate((current, next) => current + ", " + next) : string.Empty;
+            var directionsConcat = sort.Count > 0 ? sort.Select(x => x.Direction).Aggregate((current, next) => current + ", " + next) : string.Empty;
+            var fieldsConcat = sort.Count > 0 ? sort.Select(x => x.Field).Aggregate((current, next) => current + ", " + next) : string.Empty;
+
+            var collaboratorReturn = _collaboratorService.FindWithPagedSearch(sortConcat, limitRows, page, firstName, lastName, email, active);
+            var totalResults = _collaboratorService.GetCountPagedSearch(firstName, lastName, email, active);
+
+            return new PagedSearch<CollaboratorViewModel>
+            {
+                CurrentPage = page + 1,
+                PageSize = limitRows,
+                TotalResults = totalResults,
+                SortDirections = directionsConcat,
+                SortFields = fieldsConcat,
+                Filters = filters,
+                List = _mapper.Map<IEnumerable<Collaborator>, IEnumerable<CollaboratorViewModel>>(collaboratorReturn).ToList()
+            };
         }
 
         public IEnumerable<CollaboratorViewModel> GetAll()

@@ -1,16 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
+using Newtonsoft.Json;
+using OpenId3as.DivulgacaoONGs.Application.DataTransferObject.PagedSearch;
 using OpenId3as.DivulgacaoONGs.Application.Interfaces;
 using OpenId3as.DivulgacaoONGs.Application.ValueObjects.Enum;
 using OpenId3as.DivulgacaoONGs.Application.ValueObjects.HATEOAS;
 using OpenId3as.DivulgacaoONGs.Application.ViewModels.Collaborators;
+using OpenId3as.DivulgacaoONGs.Infra.CrossCutting.Security;
 using OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.HyperMedia;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
 {
     [ApiVersionNeutral]
     [Route("api/[controller]")]
+    [Authorize]
     public class CollaboratorController : BaseController
     {
         private readonly ICollaboratorAppService _collaboratorAppService;
@@ -27,7 +33,8 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         }
 
         [HttpGet(Name = "GetAllCollaborators")]
-        [ProducesResponseType(201, Type = typeof(ItemsLinkContainer<CollaboratorViewModel>))]
+        [Authorize(AuthorizationNameOptions.Bearer)]
+        [ProducesResponseType(200, Type = typeof(ItemsLinkContainer<CollaboratorViewModel>))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
@@ -47,7 +54,8 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         /// <param name="id">Id do colaborador.</param>
         /// <returns>Objeto contendo todas as informações do colaborador.</returns>
         [HttpGet("{id}", Name = "GetCollaboratorById")]
-        [ProducesResponseType(201, Type = typeof(CollaboratorViewModel))]
+        [Authorize(AuthorizationNameOptions.Bearer)]
+        [ProducesResponseType(200, Type = typeof(CollaboratorViewModel))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
@@ -64,8 +72,23 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
                 return BadRequest();
         }
 
+        [HttpGet("FindWithPagedSearch/{limitRows}/{page}", Name = "GetCollaboratorPagedSearch")]
+        [Authorize(AuthorizationNameOptions.Bearer)]
+        [ProducesResponseType(200, Type = typeof(PagedSearch<CollaboratorViewModel>))]
+        [ProducesResponseType(401)]
+        public IActionResult FindWithPagedSearch(int limitRows, int page, [FromQuery] List<SortItemDTO> sort,
+            [FromQuery] string firstName, [FromQuery] string lastName, [FromQuery] string email, [FromQuery] bool? active)
+        {
+            sort = sort ?? new List<SortItemDTO>();
+            var pagedSearch = _collaboratorAppService.FindWithPagedSearch(sort, limitRows, page, firstName, lastName, email, active);
+            foreach (var collaborator in pagedSearch.List)
+                collaborator.AddRangeLink(_collaboratorEnricher.CreateLinks(Method.Get, collaborator));
+            return Ok(pagedSearch);
+        }
+
         [HttpPost(Name = "InsertCollaborator")]
-        [ProducesResponseType(201, Type = typeof(CollaboratorViewModel))]
+        [Authorize(AuthorizationNameOptions.Bearer)]
+        [ProducesResponseType(200, Type = typeof(CollaboratorViewModel))]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         public CollaboratorViewModel Post([FromBody]CollaboratorViewModel collaborator)
@@ -76,7 +99,8 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         }
 
         [HttpPut("{id}", Name = "UpdateCollaborator")]
-        [ProducesResponseType(201, Type = typeof(CollaboratorViewModel))]
+        [Authorize(AuthorizationNameOptions.Bearer)]
+        [ProducesResponseType(200, Type = typeof(CollaboratorViewModel))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
@@ -94,6 +118,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         }
 
         [HttpDelete("{id}", Name = "DeleteCollaborator")]
+        [Authorize(AuthorizationNameOptions.Bearer)]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]

@@ -16,8 +16,10 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
             _loginAppService = loginAppService;
         }
 
-        [AllowAnonymous]
         [HttpPost]
+        [AllowAnonymous]
+        [ProducesResponseType(200, Type = typeof(object))]
+        [ProducesResponseType(400)]
         public object Post([FromBody] UserViewModel user)
         {
             if (user == null) return BadRequest();

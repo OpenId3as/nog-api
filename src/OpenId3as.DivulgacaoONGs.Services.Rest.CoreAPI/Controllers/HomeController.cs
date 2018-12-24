@@ -1,17 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using OpenId3as.DivulgacaoONGs.Application.Interfaces.Page;
 using OpenId3as.DivulgacaoONGs.Application.ValueObjects.Enum;
 using OpenId3as.DivulgacaoONGs.Application.ValueObjects.HATEOAS;
 using OpenId3as.DivulgacaoONGs.Application.ViewModels.Page;
+using OpenId3as.DivulgacaoONGs.Infra.CrossCutting.Security;
 using OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.HyperMedia;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
 {
     [ApiVersionNeutral]
     [Route("api/[controller]")]
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly IHomeAppService _homeAppService;
@@ -26,7 +28,8 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         }
 
         [HttpGet(Name = "GetAllHomes")]
-        [ProducesResponseType(201, Type = typeof(ItemsLinkContainer<HomeViewModel>))]
+        [Authorize(AuthorizationNameOptions.Bearer)]
+        [ProducesResponseType(200, Type = typeof(ItemsLinkContainer<HomeViewModel>))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
@@ -43,7 +46,8 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         }
 
         [HttpGet("{id}", Name = "GetHomeById")]
-        [ProducesResponseType(201, Type = typeof(HomeViewModel))]
+        [Authorize(AuthorizationNameOptions.Bearer)]
+        [ProducesResponseType(200, Type = typeof(HomeViewModel))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
@@ -61,7 +65,8 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         }
 
         [HttpPost(Name = "InsertHome")]
-        [ProducesResponseType(201, Type = typeof(HomeViewModel))]
+        [Authorize(AuthorizationNameOptions.Bearer)]
+        [ProducesResponseType(200, Type = typeof(HomeViewModel))]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         public HomeViewModel Post([FromBody]HomeViewModel home)
@@ -72,7 +77,8 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         }
 
         [HttpPut("{id}", Name = "UpdateHome")]
-        [ProducesResponseType(201, Type = typeof(HomeViewModel))]
+        [Authorize(AuthorizationNameOptions.Bearer)]
+        [ProducesResponseType(200, Type = typeof(HomeViewModel))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
@@ -90,6 +96,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         }
 
         [HttpDelete("{id}", Name = "DeleteHome")]
+        [Authorize(AuthorizationNameOptions.Bearer)]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]

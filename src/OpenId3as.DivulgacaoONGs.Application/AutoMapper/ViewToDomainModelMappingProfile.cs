@@ -27,7 +27,7 @@ namespace OpenId3as.DivulgacaoONGs.Application.AutoMapper
             CreateMap<VolunteerViewModel, Volunteer>();
             CreateMap<VolunteerAddressViewModel, VolunteerAddress>();
             CreateMap<VolunteerPhoneViewModel, VolunteerPhone>();
-            CreateMap<UserViewModel, User>();
+            CreateMap<User, UserViewModel>();
 
             //Mongo
             CreateMap<PageViewModels.BannerViewModel, Page.Banner>();

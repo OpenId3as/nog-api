@@ -140,6 +140,7 @@
     <Compile Include="EntityConfig\Institutions\InstitutionAddressConfig.cs" />
     <Compile Include="EntityConfig\Institutions\InstitutionConfig.cs" />
     <Compile Include="EntityConfig\Institutions\InstitutionPhoneConfig.cs" />
+    <Compile Include="EntityConfig\UserConfig.cs" />
     <Compile Include="EntityConfig\Volunteers\VolunteerAddressConfig.cs" />
     <Compile Include="EntityConfig\Volunteers\VolunteerConfig.cs" />
     <Compile Include="EntityConfig\Volunteers\VolunteerPhoneConfig.cs" />

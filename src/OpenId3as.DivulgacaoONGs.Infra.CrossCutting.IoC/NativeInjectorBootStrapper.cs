@@ -10,6 +10,7 @@ using OpenId3as.DivulgacaoONGs.Domain.Services;
 using OpenId3as.DivulgacaoONGs.Domain.Services.Collaborators;
 using OpenId3as.DivulgacaoONGs.Domain.Services.Institutions;
 using OpenId3as.DivulgacaoONGs.Domain.Services.Volunteers;
+using OpenId3as.DivulgacaoONGs.Infra.CrossCutting.Security;
 using OpenId3as.DivulgacaoONGs.Infra.Data.Interfaces;
 using OpenId3as.DivulgacaoONGs.Infra.Data.Repositories;
 using OpenId3as.DivulgacaoONGs.Infra.Data.Repositories.Collaborators;
@@ -90,6 +91,9 @@ namespace OpenId3as.DivulgacaoONGs.Infra.CrossCutting.IoC
             //LOG
             services.AddScoped(typeof(ILog.IPostgresRepository<>), typeof(LogRep.PostgresRepository<>));
             services.AddScoped<ILog.ILogRepository, LogRep.LogRepository>();
+
+            //SECURITY
+            services.AddScoped<IToken, Token>();
         }
     }
 }

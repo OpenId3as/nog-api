@@ -1,4 +1,4 @@
-﻿namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Security.Config
+﻿namespace OpenId3as.DivulgacaoONGs.Infra.CrossCutting.Security.Config
 {
     public class TokenConfig
     {

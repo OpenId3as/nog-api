@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using OpenId3as.DivulgacaoONGs.Application.Interfaces.Page;
 using OpenId3as.DivulgacaoONGs.Application.ValueObjects.Enum;
 using OpenId3as.DivulgacaoONGs.Application.ValueObjects.HATEOAS;
 using OpenId3as.DivulgacaoONGs.Application.ViewModels.Page;
+using OpenId3as.DivulgacaoONGs.Infra.CrossCutting.Security;
 using OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.HyperMedia;
 using System.Linq;
 
@@ -11,6 +13,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
 {
     [ApiVersionNeutral]
     [Route("api/[controller]")]
+    [Authorize]
     public class CollaboratorPageController : BaseController
     {
         private readonly ICollaboratorAppService _collaboratorPageAppService;
@@ -27,7 +30,8 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         }
 
         [HttpGet(Name = "GetAllCollaboratorsPages")]
-        [ProducesResponseType(201, Type = typeof(ItemsLinkContainer<CollaboratorViewModel>))]
+        [Authorize(AuthorizationNameOptions.Bearer)]
+        [ProducesResponseType(200, Type = typeof(ItemsLinkContainer<CollaboratorViewModel>))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
@@ -44,7 +48,8 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         }
 
         [HttpGet("{id}", Name = "GetCollaboratorPageById")]
-        [ProducesResponseType(201, Type = typeof(CollaboratorViewModel))]
+        [Authorize(AuthorizationNameOptions.Bearer)]
+        [ProducesResponseType(200, Type = typeof(CollaboratorViewModel))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
@@ -62,7 +67,8 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         }
 
         [HttpPost(Name = "InsertCollaboratorPage")]
-        [ProducesResponseType(201, Type = typeof(CollaboratorViewModel))]
+        [Authorize(AuthorizationNameOptions.Bearer)]
+        [ProducesResponseType(200, Type = typeof(CollaboratorViewModel))]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         public CollaboratorViewModel Post([FromBody]CollaboratorViewModel collaborator)
@@ -73,7 +79,8 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         }
 
         [HttpPut("{id}", Name = "UpdateCollaboratorPage")]
-        [ProducesResponseType(201, Type = typeof(CollaboratorViewModel))]
+        [Authorize(AuthorizationNameOptions.Bearer)]
+        [ProducesResponseType(200, Type = typeof(CollaboratorViewModel))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
@@ -91,6 +98,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         }
 
         [HttpDelete("{id}", Name = "DeleteCollaboratorPage")]
+        [Authorize(AuthorizationNameOptions.Bearer)]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]

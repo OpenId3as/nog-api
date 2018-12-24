@@ -20,15 +20,17 @@ namespace OpenId3as.DivulgacaoONGs.Infra.Data.Repositories
         {
             var cn = Db.Database.GetDbConnection();
             var sql = @"SELECT
-                            in_id AS Id,
-                            st_legal_name AS LegalName,
-                            st_trade_name AS TradeName,
-                            st_email AS Email,
-                            dt_foundation AS Foundation,
-                            ts_created AS Created,
-                            ts_updated AS Updated,
-                            bo_active AS Active
-                        FROM nog.institution";
+	                        in_id AS Id,
+	                        st_login AS Login,
+	                        st_password AS Password,
+	                        st_first_name AS FirstName,
+	                        st_last_name AS LastName,
+	                        st_email AS Email,
+	                        bo_first_access AS FirstAccess,
+	                        ts_created AS Created,
+	                        ts_updated AS Updated,
+	                        bo_active AS Active
+                        FROM nog.user";
             return cn.Query<User>(sql);
         }
 
@@ -36,16 +38,37 @@ namespace OpenId3as.DivulgacaoONGs.Infra.Data.Repositories
         {
             var cn = Db.Database.GetDbConnection();
             var sql = @"SELECT
-                            in_id AS Id,
-                            st_legal_name AS LegalName,
-                            st_trade_name AS TradeName,
-                            st_email AS Email,
-                            dt_foundation AS Foundation,
-                            ts_created AS Created,
-                            ts_updated AS Updated,
-                            bo_active AS Active
-                        FROM nog.institution WHERE in_id = @id";
+	                        in_id AS Id,
+	                        st_login AS Login,
+	                        st_password AS Password,
+	                        st_first_name AS FirstName,
+	                        st_last_name AS LastName,
+	                        st_email AS Email,
+	                        bo_first_access AS FirstAccess,
+	                        ts_created AS Created,
+	                        ts_updated AS Updated,
+	                        bo_active AS Active
+                        FROM nog.user WHERE in_id = @id";
             var result = cn.Query<User>(sql, new { id = id });
+            return result.FirstOrDefault();
+        }
+
+        public User GetByLogin(string login)
+        {
+            var cn = Db.Database.GetDbConnection();
+            var sql = @"SELECT
+	                        in_id AS Id,
+	                        st_login AS Login,
+	                        st_password AS Password,
+	                        st_first_name AS FirstName,
+	                        st_last_name AS LastName,
+	                        st_email AS Email,
+	                        bo_first_access AS FirstAccess,
+	                        ts_created AS Created,
+	                        ts_updated AS Updated,
+	                        bo_active AS Active
+                        FROM nog.user WHERE st_login = @login";
+            var result = cn.Query<User>(sql, new { login = login });
             return result.FirstOrDefault();
         }
     }

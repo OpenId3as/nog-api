@@ -41,6 +41,11 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Services
             return _userRepository.GetById(id);
         }
 
+        public User GetByLogin(string login)
+        {
+            return _userRepository.GetByLogin(login);
+        }
+
         public User Update(User user)
         {
             return _userRepository.Update(user);

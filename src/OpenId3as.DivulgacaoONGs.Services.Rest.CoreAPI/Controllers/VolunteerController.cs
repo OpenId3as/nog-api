@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using OpenId3as.DivulgacaoONGs.Application.Interfaces;
 using OpenId3as.DivulgacaoONGs.Application.ValueObjects.Enum;
 using OpenId3as.DivulgacaoONGs.Application.ValueObjects.HATEOAS;
 using OpenId3as.DivulgacaoONGs.Application.ViewModels.Volunteers;
+using OpenId3as.DivulgacaoONGs.Infra.CrossCutting.Security;
 using OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.HyperMedia;
 using System.Linq;
 
@@ -11,6 +13,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
 {
     [ApiVersionNeutral]
     [Route("api/[controller]")]
+    [Authorize]
     public class VolunteerController : BaseController
     {
         private readonly IVolunteerAppService _volunteerAppService;
@@ -25,7 +28,8 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         }
 
         [HttpGet(Name = "GetAllVolunteers")]
-        [ProducesResponseType(201, Type = typeof(ItemsLinkContainer<VolunteerViewModel>))]
+        [Authorize(AuthorizationNameOptions.Bearer)]
+        [ProducesResponseType(200, Type = typeof(ItemsLinkContainer<VolunteerViewModel>))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
@@ -42,7 +46,8 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         }
 
         [HttpGet("{id}", Name = "GetVolunteerById")]
-        [ProducesResponseType(201, Type = typeof(VolunteerViewModel))]
+        [Authorize(AuthorizationNameOptions.Bearer)]
+        [ProducesResponseType(200, Type = typeof(VolunteerViewModel))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
@@ -60,7 +65,8 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         }
 
         [HttpPost(Name = "InsertVolunteer")]
-        [ProducesResponseType(201, Type = typeof(VolunteerViewModel))]
+        [Authorize(AuthorizationNameOptions.Bearer)]
+        [ProducesResponseType(200, Type = typeof(VolunteerViewModel))]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         public VolunteerViewModel Post([FromBody]VolunteerViewModel volunteer)
@@ -71,7 +77,8 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         }
 
         [HttpPut("{id}", Name = "UpdateVolunteer")]
-        [ProducesResponseType(201, Type = typeof(VolunteerViewModel))]
+        [Authorize(AuthorizationNameOptions.Bearer)]
+        [ProducesResponseType(200, Type = typeof(VolunteerViewModel))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
@@ -89,6 +96,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         }
 
         [HttpDelete("{id}", Name = "DeleteVolunteer")]
+        [Authorize(AuthorizationNameOptions.Bearer)]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]

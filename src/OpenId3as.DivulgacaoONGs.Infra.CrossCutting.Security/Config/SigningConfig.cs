@@ -1,7 +1,7 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using System.Security.Cryptography;
 
-namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Security.Config
+namespace OpenId3as.DivulgacaoONGs.Infra.CrossCutting.Security.Config
 {
     public class SigningConfig
     {
@@ -10,7 +10,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Security.Config
 
         public SigningConfig()
         {
-            using (var provider = new RSACryptoServiceProvider())
+            using (var provider = new RSACryptoServiceProvider(2048))
                 Key = new RsaSecurityKey(provider);
 
             SigningCredentials = new SigningCredentials(Key, SecurityAlgorithms.RsaSha256Signature);

@@ -9,6 +9,7 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Interfaces.Services
         User Add(User user);
         User Update(User user);
         User GetById(long id);
+        User GetByLogin(string login);
         IEnumerable<User> GetAll();
         void Delete(long id);
     }

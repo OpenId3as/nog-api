@@ -8,11 +8,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.Net.Http.Headers;
 using OpenId3as.DivulgacaoONGs.Infra.CrossCutting.Log.Context;
 using OpenId3as.DivulgacaoONGs.Infra.CrossCutting.Log.Repositories;
+using OpenId3as.DivulgacaoONGs.Infra.CrossCutting.Security;
+using OpenId3as.DivulgacaoONGs.Infra.CrossCutting.Security.Config;
 using OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Logger;
 using OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Middlewares;
-using OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Security.Config;
 using System;
 
 namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI
@@ -34,14 +36,14 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI
             var signingConfigurations = new SigningConfig();
             services.AddSingleton(signingConfigurations);
 
-            var tokenConfigurations = new TokenConfig();
+            var tokenConfig = new TokenConfig();
 
             new ConfigureFromConfigurationOptions<TokenConfig>(
                 Configuration.GetSection("TokenConfigurations")
             )
-            .Configure(tokenConfigurations);
+            .Configure(tokenConfig);
 
-            services.AddSingleton(tokenConfigurations);
+            services.AddSingleton(tokenConfig);
 
             services.AddAuthentication(authOptions =>
             {
@@ -51,8 +53,8 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI
             {
                 var paramsValidation = bearerOptions.TokenValidationParameters;
                 paramsValidation.IssuerSigningKey = signingConfigurations.Key;
-                paramsValidation.ValidAudience = tokenConfigurations.Audience;
-                paramsValidation.ValidIssuer = tokenConfigurations.Issuer;
+                paramsValidation.ValidAudience = tokenConfig.Audience;
+                paramsValidation.ValidIssuer = tokenConfig.Issuer;
 
                 // Validates the signing of a received token
                 paramsValidation.ValidateIssuerSigningKey = true;
@@ -70,14 +72,21 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI
             // authorizing access to this project's resources
             services.AddAuthorization(auth =>
             {
-                auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
+                auth.AddPolicy(AuthorizationNameOptions.Bearer, new AuthorizationPolicyBuilder()
                     .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme‌​)
                     .RequireAuthenticatedUser().Build());
             });
 
             #endregion Security
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc(options =>
+            {
+                options.RespectBrowserAcceptHeader = true;
+                options.FormatterMappings.SetMediaTypeMappingForFormat("xml", MediaTypeHeaderValue.Parse("text/xml"));
+                options.FormatterMappings.SetMediaTypeMappingForFormat("json", MediaTypeHeaderValue.Parse("application/json"));
+
+            })
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddApiVersioning(options => options.ApiVersionReader = new HeaderApiVersionReader("api-version"));
             services.AddDependencyInjections(Configuration);
         }

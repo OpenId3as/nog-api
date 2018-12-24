@@ -31,6 +31,16 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Services.Collaborators
             GC.SuppressFinalize(this);
         }
 
+        public IEnumerable<Collaborator> FindWithPagedSearch(string sort = "", int limitRows = 50, int page = 0, string firstName = "", string lastName = "", string email = "", bool? active = null)
+        {
+            return _collaboratorRepository.FindWithPagedSearch(sort, limitRows, page, firstName, lastName, email, active);
+        }
+
+        public int GetCountPagedSearch(string firstName = "", string lastName = "", string email = "", bool? active = null)
+        {
+            return _collaboratorRepository.GetCountPagedSearch(firstName, lastName, email, active);
+        }
+
         public IEnumerable<Collaborator> GetAll()
         {
             return _collaboratorRepository.GetAll();

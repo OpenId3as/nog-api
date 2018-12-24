@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OpenId3as.DivulgacaoONGs.Domain.Entities;
 using OpenId3as.DivulgacaoONGs.Domain.Entities.Collaborators;
 using OpenId3as.DivulgacaoONGs.Domain.Entities.Institutions;
 using OpenId3as.DivulgacaoONGs.Domain.Entities.Volunteers;
+using OpenId3as.DivulgacaoONGs.Infra.Data.EntityConfig;
 using OpenId3as.DivulgacaoONGs.Infra.Data.EntityConfig.Collaborartors;
 using OpenId3as.DivulgacaoONGs.Infra.Data.EntityConfig.Institutions;
 using OpenId3as.DivulgacaoONGs.Infra.Data.EntityConfig.Volunteers;
@@ -29,6 +31,7 @@ namespace OpenId3as.DivulgacaoONGs.Infra.Data.Context.Postgres
         DbSet<Volunteer> Volunteer { get; set; }
         DbSet<VolunteerAddress> VolunteerAddresses { get; set; }
         DbSet<VolunteerPhone> VolunteerPhones { get; set; }
+        DbSet<User> User { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -41,6 +44,7 @@ namespace OpenId3as.DivulgacaoONGs.Infra.Data.Context.Postgres
             modelBuilder.ApplyConfiguration(new VolunteerConfig());
             modelBuilder.ApplyConfiguration(new VolunteerAddressConfig());
             modelBuilder.ApplyConfiguration(new VolunteerPhoneConfig());
+            modelBuilder.ApplyConfiguration(new UserConfig());
             base.OnModelCreating(modelBuilder);
         }
     }

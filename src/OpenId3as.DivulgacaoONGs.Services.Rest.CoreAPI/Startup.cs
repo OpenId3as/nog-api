@@ -86,7 +86,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI
                 options.FormatterMappings.SetMediaTypeMappingForFormat("json", MediaTypeHeaderValue.Parse("application/json"));
 
             })
-            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddApiVersioning(options => options.ApiVersionReader = new HeaderApiVersionReader("api-version"));
             services.AddDependencyInjections(Configuration);
         }

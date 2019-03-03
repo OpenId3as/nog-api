@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
-using Newtonsoft.Json;
 using OpenId3as.DivulgacaoONGs.Application.DataTransferObject.PagedSearch;
 using OpenId3as.DivulgacaoONGs.Application.Interfaces;
 using OpenId3as.DivulgacaoONGs.Application.ValueObjects.Enum;

@@ -32,14 +32,14 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Test
         }
 
         [TestCase(2)]
-        public void Collaborator_GetCollaboratorById_ReturnSuccessStatusWithoutCollaborator(long id)
+        public void Collaborator_GetCollaboratorById_ReturnBadRequestStatus(long id)
         {
             _collaboratorAppService.GetById(id).ReturnsNull();
 
             var collaborator = new CollaboratorController(null, _collaboratorAppService, null);
             var result = collaborator.Get(id);
 
-            Assert.AreEqual(204, ((StatusCodeResult)result).StatusCode, message: "Status code is different of 204");
+            Assert.AreEqual(400, ((StatusCodeResult)result).StatusCode, message: "Status code is different of 400");
         }
     }
 }

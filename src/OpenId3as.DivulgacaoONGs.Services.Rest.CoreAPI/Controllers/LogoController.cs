@@ -13,7 +13,6 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
 {
     [ApiVersionNeutral]
     [Route("api/[controller]")]
-    [Authorize]
     public class LogoController : BaseController
     {
         private readonly ILogoAppService _logoAppService;
@@ -28,7 +27,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         }
 
         [HttpGet(Name = "GetAllLogos")]
-        [Authorize(AuthorizationNameOptions.Bearer)]
+        [AllowAnonymous]
         [ProducesResponseType(200, Type = typeof(ItemsLinkContainer<LogoViewModel>))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
@@ -45,16 +44,16 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
             return result;
         }
 
-        [HttpGet("{id}", Name = "GetLogoById")]
-        [Authorize(AuthorizationNameOptions.Bearer)]
+        [HttpGet("{institution}", Name = "GetLogoByInstitution")]
+        [AllowAnonymous]
         [ProducesResponseType(200, Type = typeof(LogoViewModel))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         [ProducesResponseType(404)]
-        public IActionResult Get(long id)
+        public IActionResult Get(string institution)
         {
-            var logo = _logoAppService.GetById(id);
+            var logo = _logoAppService.GetByInstitution(institution);
             if (logo != null)
             {
                 logo.AddRangeLink(_logoEnricher.CreateLinks(Method.Get, logo));

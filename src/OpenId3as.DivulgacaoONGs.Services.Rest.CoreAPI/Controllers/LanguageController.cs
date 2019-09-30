@@ -13,7 +13,6 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
 {
     [ApiVersionNeutral]
     [Route("api/[controller]")]
-    [Authorize]
     public class LanguageController : Controller
     {
         private readonly ILanguageAppService _languageAppService;
@@ -28,7 +27,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         }
 
         [HttpGet(Name = "GetAllLanguages")]
-        [Authorize(AuthorizationNameOptions.Bearer)]
+        [AllowAnonymous]
         [ProducesResponseType(200, Type = typeof(ItemsLinkContainer<LanguageViewModel>))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
@@ -45,16 +44,16 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
             return result;
         }
 
-        [HttpGet("{id}", Name = "GetLanguageById")]
-        [Authorize(AuthorizationNameOptions.Bearer)]
+        [HttpGet("{lang}", Name = "GetLanguageByLang")]
+        [AllowAnonymous]
         [ProducesResponseType(200, Type = typeof(LanguageViewModel))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         [ProducesResponseType(404)]
-        public IActionResult Get(long id)
+        public IActionResult GetByLang(string lang = "pt-br")
         {
-            var language = _languageAppService.GetById(id);
+            var language = _languageAppService.GetByLang(lang);
             if (language != null)
             {
                 language.AddRangeLink(_languageEnricher.CreateLinks(Method.Get, language));

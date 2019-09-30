@@ -13,7 +13,6 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
 {
     [ApiVersionNeutral]
     [Route("api/[controller]")]
-    [Authorize]
     public class MenuController : BaseController
     {
         private readonly IMenuAppService _menuAppService;
@@ -45,16 +44,16 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
             return result;
         }
 
-        [HttpGet("{id}", Name = "GetMenuById")]
-        [Authorize(AuthorizationNameOptions.Bearer)]
+        [HttpGet("{institution}", Name = "GetMenuByInstitution")]
+        [AllowAnonymous]
         [ProducesResponseType(200, Type = typeof(MenuViewModel))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         [ProducesResponseType(404)]
-        public IActionResult Get(int id)
+        public IActionResult Get(string institution)
         {
-            var menu = _menuAppService.GetById(id);
+            var menu = _menuAppService.GetByInstitution(institution);
             if (menu != null)
             {
                 menu.AddRangeLink(_menuEnricher.CreateLinks(Method.Get, menu));

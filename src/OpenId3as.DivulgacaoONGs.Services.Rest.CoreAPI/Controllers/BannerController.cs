@@ -28,7 +28,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         }
 
         [HttpGet(Name = "GetAllBanners")]
-        [Authorize(AuthorizationNameOptions.Bearer)]
+        [AllowAnonymous]
         [ProducesResponseType(200, Type = typeof(ItemsLinkContainer<BannerViewModel>))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
@@ -45,16 +45,16 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
             return result;
         }
 
-        [HttpGet("{id}", Name = "GetBannerById")]
-        [Authorize(AuthorizationNameOptions.Bearer)]
+        [HttpGet("{institution}", Name = "GetBannerByInstitution")]
+        [AllowAnonymous]
         [ProducesResponseType(200, Type = typeof(BannerViewModel))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         [ProducesResponseType(404)]
-        public IActionResult Get(int id)
+        public IActionResult Get(string institution)
         {
-            var banner = _bannerAppService.GetById(id);
+            var banner = _bannerAppService.GetByInstitution(institution);
             if (banner != null)
             {
                 banner.AddRangeLink(_bannerEnricher.CreateLinks(Method.Get, banner));

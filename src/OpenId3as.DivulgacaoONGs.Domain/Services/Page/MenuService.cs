@@ -45,6 +45,11 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Services.Page
             return _menuRepository.GetById(id);
         }
 
+        public Menu GetByInstitution(string institution)
+        {
+            return _menuRepository.GetByInstitution(institution);
+        }
+
         public void Update(Menu menu, long id)
         {
             _menuRepository.Update(menu, id);

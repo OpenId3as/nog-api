@@ -5,5 +5,6 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Interfaces.Repositories.Page
 {
     public interface ILanguageRepository : IMongoRepository<Language>, IDisposable
     {
+        Language GetByLang(string Lang);
     }
 }

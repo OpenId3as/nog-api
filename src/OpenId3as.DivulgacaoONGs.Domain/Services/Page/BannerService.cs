@@ -45,6 +45,11 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Services.Page
             return _bannerRepository.GetById(id);
         }
 
+        public Banner GetByInstitution(string institution)
+        {
+            return _bannerRepository.GetByInstitution(institution);
+        }
+
         public void Update(Banner banner, long id)
         {
             _bannerRepository.Update(banner, id);

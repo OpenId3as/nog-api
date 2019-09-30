@@ -1,4 +1,5 @@
-﻿using OpenId3as.DivulgacaoONGs.Domain.Entities.Page;
+﻿using MongoDB.Driver;
+using OpenId3as.DivulgacaoONGs.Domain.Entities.Page;
 using OpenId3as.DivulgacaoONGs.Domain.Interfaces.Repositories.Page;
 using OpenId3as.DivulgacaoONGs.Infra.Data.Context.Mongo;
 
@@ -10,6 +11,12 @@ namespace OpenId3as.DivulgacaoONGs.Infra.Data.Repositories.Page
             : base(context)
         {
 
+        }
+
+        public Banner GetByInstitution(string institution)
+        {
+            var filter = Builders<Banner>.Filter.Eq("Institution", institution);
+            return _mongoContext.Db.GetCollection<Banner>("Banner").FindSync<Banner>(filter).SingleOrDefault();
         }
     }
 }

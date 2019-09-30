@@ -5,5 +5,6 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Interfaces.Repositories.Page
 {
     public interface IBannerRepository : IMongoRepository<Banner>, IDisposable
     {
+        Banner GetByInstitution(string institution);
     }
 }

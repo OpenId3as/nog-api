@@ -38,6 +38,10 @@ namespace OpenId3as.DivulgacaoONGs.Application.AutoMapper
             CreateMap<PageViewModels.HomeViewModel, Page.Home>();
             CreateMap<PageViewModels.HowToHelpViewModel, Page.HowToHelp>();
             CreateMap<PageViewModels.LanguageViewModel, Page.Language>();
+            CreateMap<PageViewModels.DataLabelsViewModel, Page.DataLabels>();
+            CreateMap<PageViewModels.FooterLabelsViewModel, Page.FooterLabels>();
+            CreateMap<PageViewModels.HeaderLabelsViewModel, Page.HeaderLabels>();
+            CreateMap<PageViewModels.ValidationLabelsViewModel, Page.ValidationLabels>();
             CreateMap<PageViewModels.LogoViewModel, Page.Logo>();
             CreateMap<PageViewModels.MenuViewModel, Page.Menu>();
             CreateMap<PageViewModels.MenuItemViewModel, Page.MenuItem>();

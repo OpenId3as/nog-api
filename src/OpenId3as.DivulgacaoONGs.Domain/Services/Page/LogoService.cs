@@ -45,6 +45,11 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Services.Page
             return _logoRepository.GetById(id);
         }
 
+        public Logo GetByInstitution(string institution)
+        {
+            return _logoRepository.GetByInstitution(institution);
+        }
+
         public void Update(Logo logo, long id)
         {
             _logoRepository.Update(logo, id);

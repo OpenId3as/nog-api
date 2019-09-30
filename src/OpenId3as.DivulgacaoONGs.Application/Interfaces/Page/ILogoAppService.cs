@@ -9,6 +9,7 @@ namespace OpenId3as.DivulgacaoONGs.Application.Interfaces.Page
         LogoViewModel Add(LogoViewModel logoViewModel);
         LogoViewModel Update(LogoViewModel logoViewModel);
         LogoViewModel GetById(long id);
+        LogoViewModel GetByInstitution(string institution);
         IEnumerable<LogoViewModel> GetAll();
         void Delete(long id);
     }

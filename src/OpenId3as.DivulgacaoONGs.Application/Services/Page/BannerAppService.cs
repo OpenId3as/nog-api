@@ -50,6 +50,11 @@ namespace OpenId3as.DivulgacaoONGs.Application.Services.Page
             return _mapper.Map<Banner, BannerViewModel>(_bannerService.GetById(id));
         }
 
+        public BannerViewModel GetByInstitution(string intitution)
+        {
+            return _mapper.Map<Banner, BannerViewModel>(_bannerService.GetByInstitution(intitution));
+        }
+
         public BannerViewModel Update(BannerViewModel bannerViewModel)
         {
             var banner = _mapper.Map<BannerViewModel, Banner>(bannerViewModel);

@@ -9,7 +9,7 @@ namespace OpenId3as.DivulgacaoONGs.Infra.Data.Repositories
 {
     public class MongoRepository<TEntity> : IMongoRepository<TEntity> where TEntity : class
     {
-        private readonly NOGContext _mongoContext;
+        protected readonly NOGContext _mongoContext;
 
         public MongoRepository(NOGContext mongoContext)
         {

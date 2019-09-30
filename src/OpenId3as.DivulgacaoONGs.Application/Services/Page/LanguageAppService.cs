@@ -50,6 +50,11 @@ namespace OpenId3as.DivulgacaoONGs.Application.Services.Page
             return _mapper.Map<Language, LanguageViewModel>(_languageService.GetById(id));
         }
 
+        public LanguageViewModel GetByLang(string lang)
+        {
+            return _mapper.Map<Language, LanguageViewModel>(_languageService.GetByLang(lang));
+        }
+
         public LanguageViewModel Update(LanguageViewModel languageViewModel)
         {
             var language = _mapper.Map<LanguageViewModel, Language>(languageViewModel);

@@ -11,6 +11,7 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Interfaces.Services.Page
         void Update(Menu menu, long id);
         void Delete(long id);
         Menu GetById(long id);
+        Menu GetByInstitution(string institution);
         IEnumerable<Menu> GetAll();
     }
 }

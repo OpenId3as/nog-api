@@ -79,6 +79,17 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI
 
             #endregion Security
 
+            #region CORS
+
+            services.AddCors(o => o.AddPolicy("EnablingCors", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+
+            #endregion CORS
+
             services.AddMvc(options =>
             {
                 options.RespectBrowserAcceptHeader = true;
@@ -99,6 +110,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI
             else
                 app.UseHsts();
 
+            app.UseCors("EnablingCors");
             app.UseHttpsRedirection();
             app.UseMvc();
             app.UseSwagger();

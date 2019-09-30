@@ -11,6 +11,7 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Interfaces.Services.Page
         void Update(Banner banner, long id);
         void Delete(long id);
         Banner GetById(long id);
+        Banner GetByInstitution(string institution);
         IEnumerable<Banner> GetAll();
     }
 }

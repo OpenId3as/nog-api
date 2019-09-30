@@ -9,6 +9,7 @@ namespace OpenId3as.DivulgacaoONGs.Application.Interfaces.Page
         BannerViewModel Add(BannerViewModel bannerViewModel);
         BannerViewModel Update(BannerViewModel bannerViewModel);
         BannerViewModel GetById(long id);
+        BannerViewModel GetByInstitution(string institution);
         IEnumerable<BannerViewModel> GetAll();
         void Delete(long id);
     }

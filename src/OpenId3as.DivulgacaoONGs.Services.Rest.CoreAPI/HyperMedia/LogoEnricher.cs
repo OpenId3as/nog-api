@@ -32,7 +32,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.HyperMedia
 
                 if (content != null)
                 {
-                    getById = new Link() { Method = "GET", Rel = "get logo by id", Href = _urlHelper.Link("GetLogoById", new { id = content.Id }) };
+                    getById = new Link() { Method = "GET", Rel = "get logo by institution", Href = _urlHelper.Link("GetLogoByInstitution", new { }) };
                     update = new Link() { Method = "PUT", Rel = "update logo", Href = _urlHelper.Link("UpdateLogo", new { id = content.Id }) };
                     delete = new Link() { Method = "DELETE", Rel = "delete logo", Href = _urlHelper.Link("DeleteLogo", new { id = content.Id }) };
                 }

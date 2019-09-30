@@ -29,7 +29,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.HyperMedia
 
                 if (content != null)
                 {
-                    getById = new Link() { Method = "GET", Rel = "get language by id", Href = _urlHelper.Link("GetLanguageById", new { id = content.Id }) };
+                    getById = new Link() { Method = "GET", Rel = "get language by lang", Href = _urlHelper.Link("GetLanguageByLang", new { }) };
                     update = new Link() { Method = "PUT", Rel = "update language", Href = _urlHelper.Link("UpdateLanguage", new { id = content.Id }) };
                     delete = new Link() { Method = "DELETE", Rel = "delete language", Href = _urlHelper.Link("DeleteLanguage", new { id = content.Id }) };
                 }

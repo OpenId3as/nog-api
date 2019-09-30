@@ -45,6 +45,11 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Services.Page
             return _languageRepository.GetById(id);
         }
 
+        public Language GetByLang(string lang)
+        {
+            return _languageRepository.GetByLang(lang);
+        }
+
         public void Update(Language language, long id)
         {
             _languageRepository.Update(language, id);

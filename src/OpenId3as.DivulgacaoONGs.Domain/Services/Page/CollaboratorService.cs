@@ -45,6 +45,11 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Services.Page
             return _collaboratorRepository.GetById(id);
         }
 
+        public Collaborator GetInstitutionByLanguage(string language, string institution)
+        {
+            return _collaboratorRepository.GetInstitutionByLanguage(language, institution);
+        }
+
         public void Update(Collaborator collaborator, long id)
         {
             _collaboratorRepository.Update(collaborator, id);

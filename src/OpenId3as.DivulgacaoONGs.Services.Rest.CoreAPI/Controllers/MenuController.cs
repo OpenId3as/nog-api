@@ -13,7 +13,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
 {
     [ApiVersionNeutral]
     [Route("api/[controller]")]
-    public class MenuController : BaseController
+    public class MenuController : ControllerBase
     {
         private readonly IMenuAppService _menuAppService;
         private readonly IDistributedCache _cache;
@@ -53,7 +53,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         [ProducesResponseType(404)]
         public IActionResult Get(string institution)
         {
-            var menu = _menuAppService.GetByInstitution(institution);
+            var menu = _menuAppService.GetInstitutionByLanguage("pt-br", institution);
             if (menu != null)
             {
                 menu.AddRangeLink(_menuEnricher.CreateLinks(Method.Get, menu));

@@ -26,14 +26,6 @@ namespace OpenId3as.DivulgacaoONGs.Infra.Data.Context.Mongo
             }
         }
 
-        public IMongoCollection<Banner> Banner
-        {
-            get
-            {
-                return _database.GetCollection<Banner>("Banner");
-            }
-        }
-
         public IMongoCollection<Collaborator> Collaborator
         {
             get

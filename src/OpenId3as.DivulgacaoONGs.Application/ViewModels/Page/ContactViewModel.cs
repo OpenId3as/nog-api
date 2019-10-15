@@ -3,6 +3,5 @@
     public class ContactViewModel : BasePageViewModel
     {
         public long Id { get; set; }
-        public string Language { get; set; }
     }
 }

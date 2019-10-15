@@ -12,5 +12,6 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Interfaces.Services.Page
         void Delete(long id);
         WhoAreWe GetById(long id);
         IEnumerable<WhoAreWe> GetAll();
+        WhoAreWe GetInstitutionByLanguage(string language, string institution);
     }
 }

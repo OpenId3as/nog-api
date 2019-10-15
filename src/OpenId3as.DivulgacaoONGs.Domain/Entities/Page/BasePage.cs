@@ -7,6 +7,12 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Entities.Page
         public string Institution { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+        public List<LanguagePage> Language { get; set; }
+    }
+
+    public class LanguagePage
+    {
+        public string Lang { get; set; }
         public List<DataPage> Data { get; set; }
     }
 }

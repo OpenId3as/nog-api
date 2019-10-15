@@ -50,6 +50,11 @@ namespace OpenId3as.DivulgacaoONGs.Application.Services.Page
             return _mapper.Map<HowToHelp, HowToHelpViewModel>(_howToHelpService.GetById(id));
         }
 
+        public HowToHelpViewModel GetInstitutionByLanguage(string language, string institution)
+        {
+            return _mapper.Map<HowToHelp, HowToHelpViewModel>(_howToHelpService.GetInstitutionByLanguage(language, institution));
+        }
+
         public HowToHelpViewModel Update(HowToHelpViewModel howToHelpViewModel)
         {
             var howToHelp = _mapper.Map<HowToHelpViewModel, HowToHelp>(howToHelpViewModel);

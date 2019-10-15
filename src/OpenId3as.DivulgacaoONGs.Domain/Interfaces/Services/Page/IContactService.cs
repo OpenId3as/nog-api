@@ -11,6 +11,7 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Interfaces.Services.Page
         void Update(Contact contact, long id);
         void Delete(long id);
         Contact GetById(long id);
+        Contact GetInstitutionByLanguage(string language, string institution);
         IEnumerable<Contact> GetAll();
     }
 }

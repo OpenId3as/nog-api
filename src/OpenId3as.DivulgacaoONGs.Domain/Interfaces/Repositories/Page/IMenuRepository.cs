@@ -5,6 +5,6 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Interfaces.Repositories.Page
 {
     public interface IMenuRepository : IMongoRepository<Menu>, IDisposable
     {
-        Menu GetByInstitution(string institution);
+        Menu GetInstitutionByLanguage(string language, string institution);
     }
 }

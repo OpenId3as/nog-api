@@ -7,16 +7,16 @@ namespace OpenId3as.DivulgacaoONGs.Infra.Data.Repositories.Page
 {
     public class LogoRepository : MongoRepository<Logo>, ILogoRepository
     {
+        private IMongoCollection<Logo> Logo { get; }
         public LogoRepository(NOGContext context)
             : base(context)
         {
-
+            Logo = _mongoContext.Db.GetCollection<Logo>("Logo");
         }
 
         public Logo GetByInstitution(string institution)
         {
-            var filter = Builders<Logo>.Filter.Eq("Institution", institution);
-            return _mongoContext.Db.GetCollection<Logo>("Logo").FindSync<Logo>(filter).SingleOrDefault();
+            return Logo.FindSync(x => x.Institution == institution).SingleOrDefault();
         }
     }
 }

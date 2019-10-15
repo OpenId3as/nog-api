@@ -2,6 +2,5 @@
 {
     public class HowToHelp : BasePage
     {
-        public string Language { get; set; }
     }
 }

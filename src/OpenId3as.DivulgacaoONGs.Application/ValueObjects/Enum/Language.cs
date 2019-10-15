@@ -4,11 +4,11 @@ namespace OpenId3as.DivulgacaoONGs.Application.ValueObjects.Enum
 {
     public enum Language
     {
-        [Description("Portuguese")]
+        [Description("pt-br")]
         Portugues = 1,
-        [Description("English")]
+        [Description("en-us")]
         Ingles = 2,
-        [Description("Spanish")]
+        [Description("sp")]
         Espanhol = 3,
     }
 }

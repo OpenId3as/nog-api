@@ -10,6 +10,7 @@ namespace OpenId3as.DivulgacaoONGs.Application.Interfaces.Page
         HomeViewModel Update(HomeViewModel homeViewModel);
         HomeViewModel GetById(long id);
         IEnumerable<HomeViewModel> GetAll();
+        HomeViewModel GetInstitutionByLanguage(string language, string institution);
         void Delete(long id);
     }
 }

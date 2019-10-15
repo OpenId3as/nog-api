@@ -45,6 +45,11 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Services.Page
             return _howToHelpRepository.GetById(id);
         }
 
+        public HowToHelp GetInstitutionByLanguage(string language, string institution)
+        {
+            return _howToHelpRepository.GetInstitutionByLanguage(language, institution);
+        }
+
         public void Update(HowToHelp howToHelp, long id)
         {
             _howToHelpRepository.Update(howToHelp, id);

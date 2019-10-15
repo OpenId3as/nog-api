@@ -10,6 +10,7 @@ namespace OpenId3as.DivulgacaoONGs.Application.Interfaces.Page
         WhoAreWeViewModel Update(WhoAreWeViewModel whoAreWeViewModel);
         WhoAreWeViewModel GetById(long id);
         IEnumerable<WhoAreWeViewModel> GetAll();
+        WhoAreWeViewModel GetInstitutionByLanguage(string language, string institution);
         void Delete(long id);
     }
 }

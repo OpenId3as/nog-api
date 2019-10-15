@@ -10,6 +10,7 @@ namespace OpenId3as.DivulgacaoONGs.Application.Interfaces.Page
         HowToHelpViewModel Update(HowToHelpViewModel howToHelpViewModel);
         HowToHelpViewModel GetById(long id);
         IEnumerable<HowToHelpViewModel> GetAll();
+        HowToHelpViewModel GetInstitutionByLanguage(string language, string institution);
         void Delete(long id);
     }
 }

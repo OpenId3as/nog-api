@@ -2,6 +2,5 @@
 {
     public class Contact : BasePage
     {
-        public string Language { get; set; }
     }
 }

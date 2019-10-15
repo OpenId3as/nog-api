@@ -12,5 +12,6 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Interfaces.Services.Page
         void Delete(long id);
         Volunteer GetById(long id);
         IEnumerable<Volunteer> GetAll();
+        Volunteer GetInstitutionByLanguage(string language, string institution);
     }
 }

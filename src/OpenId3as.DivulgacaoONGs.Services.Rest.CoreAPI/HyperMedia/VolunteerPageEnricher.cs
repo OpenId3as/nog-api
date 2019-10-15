@@ -6,22 +6,22 @@ using System.Collections.Generic;
 
 namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.HyperMedia
 {
-    public class BannerEnricher
+    public class VolunteerPageEnricher
     {
         private readonly IUrlHelper _urlHelper;
 
-        public BannerEnricher(IUrlHelper urlHelper)
+        public VolunteerPageEnricher(IUrlHelper urlHelper)
         {
             _urlHelper = urlHelper;
         }
 
-        public IEnumerable<Link> CreateLinks(Method method, BannerViewModel content = null)
+        public IEnumerable<Link> CreateLinks(Method method, VolunteerViewModel content = null)
         {
             var linkContainer = new LinkContainer();
             if (_urlHelper != null)
             {
-                var getAll = new Link() { Method = "GET", Rel = "get all banners", Href = _urlHelper.Link("GetAllBanners", new { }) };
-                var insert = new Link() { Method = "POST", Rel = "insert banner", Href = _urlHelper.Link("InsertBanner", new { }) };
+                var getAll = new Link() { Method = "GET", Rel = "get all volunteers pages", Href = _urlHelper.Link("GetAllVolunteersPages", new { }) };
+                var insert = new Link() { Method = "POST", Rel = "insert volunteer page", Href = _urlHelper.Link("InsertVolunteerPage", new { }) };
 
                 var getById = new Link();
                 var update = new Link();
@@ -29,9 +29,9 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.HyperMedia
 
                 if (content != null)
                 {
-                    getById = new Link() { Method = "GET", Rel = "get banner by institution", Href = _urlHelper.Link("GetBannerByInstitution", new { }) };
-                    update = new Link() { Method = "PUT", Rel = "update banner", Href = _urlHelper.Link("UpdateBanner", new { id = content.Id }) };
-                    delete = new Link() { Method = "DELETE", Rel = "delete banner", Href = _urlHelper.Link("DeleteBanner", new { id = content.Id }) };
+                    getById = new Link() { Method = "GET", Rel = "get volunteer page by id", Href = _urlHelper.Link("GetVolunteerPageById", new { id = content.Id }) };
+                    update = new Link() { Method = "PUT", Rel = "update volunteer page", Href = _urlHelper.Link("UpdateVolunteerPage", new { id = content.Id }) };
+                    delete = new Link() { Method = "DELETE", Rel = "delete volunteer page", Href = _urlHelper.Link("DeleteVolunteerPage", new { id = content.Id }) };
                 }
 
                 switch (method)

@@ -5,5 +5,6 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Interfaces.Repositories.Page
 {
     public interface IWhoAreWeRepository : IMongoRepository<WhoAreWe>, IDisposable
     {
+        WhoAreWe GetInstitutionByLanguage(string language, string institution);
     }
 }

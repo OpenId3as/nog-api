@@ -45,6 +45,11 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Services.Page
             return _whoAreWeRepository.GetById(id);
         }
 
+        public WhoAreWe GetInstitutionByLanguage(string language, string institution)
+        {
+            return _whoAreWeRepository.GetInstitutionByLanguage(language, institution);
+        }
+
         public void Update(WhoAreWe whoAreWe, long id)
         {
             _whoAreWeRepository.Update(whoAreWe, id);

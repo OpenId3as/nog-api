@@ -30,7 +30,6 @@ namespace OpenId3as.DivulgacaoONGs.Application.AutoMapper
             CreateMap<User, UserViewModel>();
 
             //Mongo
-            CreateMap<PageViewModels.BannerViewModel, Page.Banner>();
             CreateMap<PageViewModels.BasePageViewModel, Page.BasePage>();
             CreateMap<PageViewModels.CollaboratorViewModel, Page.Collaborator>();
             CreateMap<PageViewModels.ContactViewModel, Page.Contact>();
@@ -49,6 +48,7 @@ namespace OpenId3as.DivulgacaoONGs.Application.AutoMapper
             CreateMap<PageViewModels.StyleViewModel, Page.Style>();
             CreateMap<PageViewModels.VolunteerViewModel, Page.Volunteer>();
             CreateMap<PageViewModels.WhoAreWeViewModel, Page.WhoAreWe>();
+            CreateMap<PageViewModels.LanguagePageViewModel, Page.LanguagePage>();
         }
     }
 }

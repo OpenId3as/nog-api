@@ -10,6 +10,7 @@ namespace OpenId3as.DivulgacaoONGs.Application.Interfaces.Page
         CollaboratorViewModel Update(CollaboratorViewModel collaboratorViewModel);
         CollaboratorViewModel GetById(long id);
         IEnumerable<CollaboratorViewModel> GetAll();
+        CollaboratorViewModel GetInstitutionByLanguage(string language, string institution);
         void Delete(long id);
     }
 }

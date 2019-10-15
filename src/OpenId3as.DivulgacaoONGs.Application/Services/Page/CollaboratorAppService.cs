@@ -50,6 +50,11 @@ namespace OpenId3as.DivulgacaoONGs.Application.Services.Page
             return _mapper.Map<Collaborator, CollaboratorViewModel>(_collaboratorService.GetById(id));
         }
 
+        public CollaboratorViewModel GetInstitutionByLanguage(string language, string institution)
+        {
+            return _mapper.Map<Collaborator, CollaboratorViewModel>(_collaboratorService.GetInstitutionByLanguage(language, institution));
+        }
+
         public CollaboratorViewModel Update(CollaboratorViewModel collaboratorViewModel)
         {
             var collaborator = _mapper.Map<CollaboratorViewModel, Collaborator>(collaboratorViewModel);

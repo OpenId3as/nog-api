@@ -50,6 +50,11 @@ namespace OpenId3as.DivulgacaoONGs.Application.Services.Page
             return _mapper.Map<Contact, ContactViewModel>(_contactService.GetById(id));
         }
 
+        public ContactViewModel GetInstitutionByLanguage(string language, string institution)
+        {
+            return _mapper.Map<Contact, ContactViewModel>(_contactService.GetInstitutionByLanguage(language, institution));
+        }
+
         public ContactViewModel Update(ContactViewModel contactViewModel)
         {
             var contact = _mapper.Map<ContactViewModel, Contact>(contactViewModel);

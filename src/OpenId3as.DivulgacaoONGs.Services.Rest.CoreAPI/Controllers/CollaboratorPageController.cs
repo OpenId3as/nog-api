@@ -14,7 +14,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
     [ApiVersionNeutral]
     [Route("api/[controller]")]
     [Authorize]
-    public class CollaboratorPageController : BaseController
+    public class CollaboratorPageController : ControllerBase
     {
         private readonly ICollaboratorAppService _collaboratorPageAppService;
         private readonly IDistributedCache _cache;

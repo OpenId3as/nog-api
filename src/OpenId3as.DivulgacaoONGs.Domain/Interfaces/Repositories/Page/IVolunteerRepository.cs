@@ -5,5 +5,6 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Interfaces.Repositories.Page
 {
     public interface IVolunteerRepository : IMongoRepository<Volunteer>, IDisposable
     {
+        Volunteer GetInstitutionByLanguage(string language, string institution);
     }
 }

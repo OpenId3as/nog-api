@@ -13,7 +13,7 @@ namespace OpenId3as.DivulgacaoONGs.Domain.Entities
 
         public bool IsTransient()
         {
-            return this.Id == default(long);
+            return Id == default(long);
         }
     }
 }

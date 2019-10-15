@@ -39,7 +39,6 @@ namespace OpenId3as.DivulgacaoONGs.Infra.CrossCutting.IoC
             services.AddScoped<IVolunteerAppService, VolunteerAppService>();
             services.AddScoped<IUserAppService, UserAppService>();
 
-            services.AddScoped<IPageApp.IBannerAppService, PageApp.BannerAppService>();
             services.AddScoped<IPageApp.ICollaboratorAppService, PageApp.CollaboratorAppService>();
             services.AddScoped<IPageApp.IContactAppService, PageApp.ContactAppService>();
             services.AddScoped<IPageApp.IHomeAppService, PageApp.HomeAppService>();
@@ -56,7 +55,6 @@ namespace OpenId3as.DivulgacaoONGs.Infra.CrossCutting.IoC
             services.AddScoped<IVolunteerService, VolunteerService>();
             services.AddScoped<IUserService, UserService>();
 
-            services.AddScoped<IPageSvc.IBannerService, PageSvc.BannerService>();
             services.AddScoped<IPageSvc.ICollaboratorService, PageSvc.CollaboratorService>();
             services.AddScoped<IPageSvc.IContactService, PageSvc.ContactService>();
             services.AddScoped<IPageSvc.IHomeService, PageSvc.HomeService>();
@@ -73,7 +71,6 @@ namespace OpenId3as.DivulgacaoONGs.Infra.CrossCutting.IoC
             services.AddScoped<IVolunteerRepository, VolunteerRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
 
-            services.AddScoped<IPageRep.IBannerRepository, PageRep.BannerRepository>();
             services.AddScoped<IPageRep.ICollaboratorRepository, PageRep.CollaboratorRepository>();
             services.AddScoped<IPageRep.IContactRepository, PageRep.ContactRepository>();
             services.AddScoped<IPageRep.IHomeRepository, PageRep.HomeRepository>();

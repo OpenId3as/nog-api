@@ -163,7 +163,6 @@
     <Compile Include="Repositories\Institutions\InstitutionPhoneRepository.cs" />
     <Compile Include="Repositories\Institutions\InstitutionRepository.cs" />
     <Compile Include="Repositories\MongoRepository.cs" />
-    <Compile Include="Repositories\Page\BannerRepository.cs" />
     <Compile Include="Repositories\Page\CollaboratorRepository.cs" />
     <Compile Include="Repositories\Page\ContactRepository.cs" />
     <Compile Include="Repositories\Page\HomeRepository.cs" />

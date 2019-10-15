@@ -6,6 +6,7 @@ using OpenId3as.DivulgacaoONGs.Domain.Interfaces.Services.Page;
 using OpenId3as.DivulgacaoONGs.Infra.Data.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace OpenId3as.DivulgacaoONGs.Application.Services.Page
 {
@@ -50,9 +51,11 @@ namespace OpenId3as.DivulgacaoONGs.Application.Services.Page
             return _mapper.Map<Menu, MenuViewModel>(_menuService.GetById(id));
         }
 
-        public MenuViewModel GetByInstitution(string institution)
+        public MenuViewModel GetInstitutionByLanguage(string language, string institution)
         {
-            return _mapper.Map<Menu, MenuViewModel>(_menuService.GetByInstitution(institution));
+            var menu = _menuService.GetInstitutionByLanguage(language, institution);
+            menu?.MenuItems.FirstOrDefault().SetMenuDetails(menu?.MenuItems.FirstOrDefault().MenuDetails?.OrderBy(x => x.Order).ToList());
+            return _mapper.Map<Menu, MenuViewModel>(menu);
         }
 
         public MenuViewModel Update(MenuViewModel menuViewModel)

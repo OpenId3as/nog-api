@@ -14,7 +14,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
     [ApiVersionNeutral]
     [Route("api/[controller]")]
     [Authorize]
-    public class UserController : BaseController
+    public class UserController : ControllerBase
     {
         private readonly IUserAppService _UserAppService;
         private readonly IDistributedCache _cache;

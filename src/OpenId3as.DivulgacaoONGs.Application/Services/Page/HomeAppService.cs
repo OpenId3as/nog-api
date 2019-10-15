@@ -50,6 +50,11 @@ namespace OpenId3as.DivulgacaoONGs.Application.Services.Page
             return _mapper.Map<Home, HomeViewModel>(_logoService.GetById(id));
         }
 
+        public HomeViewModel GetInstitutionByLanguage(string language, string institution)
+        {
+            return _mapper.Map<Home, HomeViewModel>(_logoService.GetInstitutionByLanguage(language, institution));
+        }
+
         public HomeViewModel Update(HomeViewModel logoViewModel)
         {
             var logo = _mapper.Map<HomeViewModel, Home>(logoViewModel);

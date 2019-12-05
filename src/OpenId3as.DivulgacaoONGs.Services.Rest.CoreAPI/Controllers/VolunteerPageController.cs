@@ -20,9 +20,10 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         private readonly IDistributedCache _cache;
         private readonly VolunteerPageEnricher _volunteerPageEnricher;
 
-        public VolunteerPageController(IDistributedCache cache,
-                                    IVolunteerAppService volunteerPageAppService,
-                                    IUrlHelper urlHelper)
+        public VolunteerPageController(
+            IDistributedCache cache,
+            IVolunteerAppService volunteerPageAppService,
+            IUrlHelper urlHelper)
         {
             _cache = cache;
             _volunteerPageAppService = volunteerPageAppService;
@@ -112,7 +113,6 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
             }
             else
                 return BadRequest();
-
         }
     }
 }

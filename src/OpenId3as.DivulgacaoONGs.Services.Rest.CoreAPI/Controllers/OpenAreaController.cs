@@ -4,7 +4,6 @@ using OpenId3as.DivulgacaoONGs.Application.Interfaces.Page;
 using OpenId3as.DivulgacaoONGs.Application.ValueObjects.Enum;
 using OpenId3as.DivulgacaoONGs.Application.ViewModels.Page;
 using OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.HyperMedia;
-using System;
 
 namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
 {
@@ -35,7 +34,8 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         private readonly VolunteerPageEnricher _volunteerEnricher;
         private readonly WhoAreWeEnricher _whoAreWeEnricher;
 
-        public OpenAreaController(ICollaboratorAppService collaboratorPageAppService,
+        public OpenAreaController(
+            ICollaboratorAppService collaboratorPageAppService,
             IContactAppService contactAppService,
             IHomeAppService homeAppService,
             IHowToHelpAppService howToHelpAppService,
@@ -44,8 +44,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
             IMenuAppService menuAppService,
             IVolunteerAppService volunteerAppService,
             IWhoAreWeAppService whoAreWeAppService,
-            IUrlHelper urlHelper
-            )
+            IUrlHelper urlHelper)
         {
             _collaboratorPageAppService = collaboratorPageAppService;
             _contactAppService = contactAppService;

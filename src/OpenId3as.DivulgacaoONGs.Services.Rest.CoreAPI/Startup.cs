@@ -39,8 +39,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI
             var tokenConfig = new TokenConfig();
 
             new ConfigureFromConfigurationOptions<TokenConfig>(
-                Configuration.GetSection("TokenConfigurations")
-            )
+                Configuration.GetSection("TokenConfigurations"))
             .Configure(tokenConfig);
 
             services.AddSingleton(tokenConfig);
@@ -95,9 +94,8 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI
                 options.RespectBrowserAcceptHeader = true;
                 options.FormatterMappings.SetMediaTypeMappingForFormat("xml", MediaTypeHeaderValue.Parse("text/xml"));
                 options.FormatterMappings.SetMediaTypeMappingForFormat("json", MediaTypeHeaderValue.Parse("application/json"));
-
             })
-            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddApiVersioning(options => options.ApiVersionReader = new HeaderApiVersionReader("api-version"));
             services.AddDependencyInjections(Configuration);
         }
@@ -110,9 +108,14 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI
             else
                 app.UseHsts();
 
+            app.UseStaticFiles();
+            app.UseRouting();
             app.UseCors("EnablingCors");
             app.UseHttpsRedirection();
-            app.UseMvc();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {

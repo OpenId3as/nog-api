@@ -16,15 +16,15 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
     [Authorize]
     public class UserController : ControllerBase
     {
-        private readonly IUserAppService _UserAppService;
+        private readonly IUserAppService _userAppService;
         private readonly IDistributedCache _cache;
-        private readonly UserEnricher _UserEnricher;
+        private readonly UserEnricher _userEnricher;
 
-        public UserController(IDistributedCache cache, IUserAppService UserAppService, IUrlHelper urlHelper)
+        public UserController(IDistributedCache cache, IUserAppService userAppService, IUrlHelper urlHelper)
         {
             _cache = cache;
-            _UserAppService = UserAppService;
-            _UserEnricher = new UserEnricher(urlHelper);
+            _userAppService = userAppService;
+            _userEnricher = new UserEnricher(urlHelper);
         }
 
         [HttpGet(Name = "GetAllUsers")]
@@ -35,13 +35,13 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         [ProducesResponseType(401)]
         public ItemsLinkContainer<UserViewModel> Get()
         {
-            var User = _UserAppService.GetAll().ToList();
-            User.ForEach(x => x.AddRangeLink(_UserEnricher.CreateLinks(Method.Get, x)));
+            var user = _userAppService.GetAll().ToList();
+            user.ForEach(x => x.AddRangeLink(_userEnricher.CreateLinks(Method.Get, x)));
             var result = new ItemsLinkContainer<UserViewModel>()
             {
-                Items = User
+                Items = user
             };
-            result.AddRangeLink(_UserEnricher.CreateLinks(Method.GetAll));
+            result.AddRangeLink(_userEnricher.CreateLinks(Method.GetAll));
             return result;
         }
 
@@ -54,11 +54,11 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         [ProducesResponseType(404)]
         public IActionResult Get(long id)
         {
-            var User = _UserAppService.GetById(id);
-            if (User != null)
+            var user = _userAppService.GetById(id);
+            if (user != null)
             {
-                User.AddRangeLink(_UserEnricher.CreateLinks(Method.Get, User));
-                return Ok(User);
+                user.AddRangeLink(_userEnricher.CreateLinks(Method.Get, user));
+                return Ok(user);
             }
             else
                 return BadRequest();
@@ -69,11 +69,11 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         [ProducesResponseType(200, Type = typeof(UserViewModel))]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
-        public UserViewModel Post([FromBody]UserViewModel User)
+        public UserViewModel Post([FromBody]UserViewModel user)
         {
-            User = _UserAppService.Add(User);
-            User.AddRangeLink(_UserEnricher.CreateLinks(Method.Post, User));
-            return User;
+            user = _userAppService.Add(user);
+            user.AddRangeLink(_userEnricher.CreateLinks(Method.Post, user));
+            return user;
         }
 
         [HttpPut("{id}", Name = "UpdateUser")]
@@ -83,13 +83,13 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         [ProducesResponseType(404)]
-        public IActionResult Put(long id, [FromBody]UserViewModel User)
+        public IActionResult Put(long id, [FromBody]UserViewModel user)
         {
-            if (_UserAppService.GetById(User.Id).Id != 0)
+            if (_userAppService.GetById(user.Id).Id != 0)
             {
-                User = _UserAppService.Update(User);
-                User.AddRangeLink(_UserEnricher.CreateLinks(Method.Put, User));
-                return Ok(User);
+                user = _userAppService.Update(user);
+                user.AddRangeLink(_userEnricher.CreateLinks(Method.Put, user));
+                return Ok(user);
             }
             else
                 return BadRequest();
@@ -103,9 +103,9 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         [ProducesResponseType(404)]
         public IActionResult Delete(long id)
         {
-            if (_UserAppService.GetById(id).Id != 0)
+            if (_userAppService.GetById(id).Id != 0)
             {
-                _UserAppService.Delete(id);
+                _userAppService.Delete(id);
                 return NoContent();
             }
             else

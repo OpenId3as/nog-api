@@ -56,7 +56,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Logger
 
         public bool IsEnabled(LogLevel logLevel)
         {
-            return (_filter == null || _filter(_category, logLevel));
+            return _filter == null || _filter(_category, logLevel);
         }
 
         public IDisposable BeginScope<TState>(TState state)

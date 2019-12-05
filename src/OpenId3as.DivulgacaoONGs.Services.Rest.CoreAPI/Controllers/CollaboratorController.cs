@@ -22,9 +22,10 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
         private readonly IDistributedCache _cache;
         private readonly CollaboratorEnricher _collaboratorEnricher;
 
-        public CollaboratorController(IDistributedCache cache,
-                                    ICollaboratorAppService collaboratorAppService,
-                                    IUrlHelper urlHelper)
+        public CollaboratorController(
+            IDistributedCache cache,
+            ICollaboratorAppService collaboratorAppService,
+            IUrlHelper urlHelper)
         {
             _cache = cache;
             _collaboratorAppService = collaboratorAppService;

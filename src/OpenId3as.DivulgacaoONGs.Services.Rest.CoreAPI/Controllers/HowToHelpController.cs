@@ -25,7 +25,6 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
             _cache = cache;
             _howToHelpAppService = howToHelpAppService;
             _howToHelpEnricher = new HowToHelpEnricher(urlHelper);
-
         }
 
         [HttpGet(Name = "GetAllHowToHelp")]

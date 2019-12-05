@@ -9,7 +9,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
     [Route("api/[controller]")]
     public class LoginController : ControllerBase
     {
-        private ILoginAppService _loginAppService;
+        private readonly ILoginAppService _loginAppService;
 
         public LoginController(ILoginAppService loginAppService)
         {

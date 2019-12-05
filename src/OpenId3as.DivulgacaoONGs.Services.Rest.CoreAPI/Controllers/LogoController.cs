@@ -13,6 +13,7 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Controllers
 {
     [ApiVersionNeutral]
     [Route("api/[controller]")]
+    [Authorize]
     public class LogoController : ControllerBase
     {
         private readonly ILogoAppService _logoAppService;

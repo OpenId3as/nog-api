@@ -22,7 +22,6 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Logger
 
         public void Dispose()
         {
-
         }
     }
 }

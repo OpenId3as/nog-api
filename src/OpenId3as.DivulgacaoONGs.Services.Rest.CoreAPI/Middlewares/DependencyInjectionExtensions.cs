@@ -6,13 +6,10 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.OpenApi.Models;
 using OpenId3as.DivulgacaoONGs.Application.AutoMapper.Config;
 using OpenId3as.DivulgacaoONGs.Infra.CrossCutting.IoC;
 using OpenId3as.DivulgacaoONGs.Infra.CrossCutting.Log.Context;
 using StackExchange.Redis;
-using System;
-using AM = AutoMapper;
 using Mongo = OpenId3as.DivulgacaoONGs.Infra.Data.Context.Mongo;
 using Postgres = OpenId3as.DivulgacaoONGs.Infra.Data.Context.Postgres;
 
@@ -24,28 +21,9 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI.Middlewares
         {
             // AutoMapper
             services.AddAutoMapper(typeof(Startup));
-            services.AddScoped<IMapper>(sp => new Mapper(sp.GetRequiredService<AM.IConfigurationProvider>(), sp.GetService));
-            AutoMapperConfig.RegisterMappingsInit();
-            services.AddSingleton(Mapper.Configuration);
 
-            // Swagger
-            _ = services.AddSwaggerGen(c =>
-              {
-                  c.SwaggerDoc(
-                      "v1",
-                      new OpenApiInfo
-                      {
-                          Title = "Divulgação de ONG's",
-                          Version = "v1",
-                          Description = "API Rest desenvolvida em ASPNET Core 2.2",
-                          Contact = new OpenApiContact
-                          {
-                              Name = "Marcelo Ribeiro de Albuquerque",
-                              Url = new Uri("https://github.com/openid3as")
-                          }
-                      });
-                  c.CustomSchemaIds(x => x.FullName);
-              });
+            var mapperConfig = new AutoMapperConfig().RegisterMappingsInit();
+            services.AddScoped<IMapper>(sp => new Mapper(mapperConfig, sp.GetService));
 
             // Postgres
             services

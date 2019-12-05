@@ -191,16 +191,15 @@
     <Compile Include="Repositories\Volunteers\VolunteerRepository.cs" />
     <Compile Include="UoW\UnitOfWork.cs" />
   </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <ProjectReference Include="..\OpenId3as.DivulgacaoONGs.Domain\OpenId3as.DivulgacaoONGs.Domain.csproj">
-      <Project>{4C9CD773-A442-4829-95EC-004E819326F8}</Project>
-      <Name>OpenId3as.DivulgacaoONGs.Domain</Name>
-    </ProjectReference>
-  </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OpenId3as.DivulgacaoONGs.Domain\OpenId3as.DivulgacaoONGs.Domain.csproj">
+      <Project>{4c9cd773-a442-4829-95ec-004e819326f8}</Project>
+      <Name>OpenId3as.DivulgacaoONGs.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,14 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
+using Microsoft.OpenApi.Models;
 using OpenId3as.DivulgacaoONGs.Infra.CrossCutting.Log.Context;
 using OpenId3as.DivulgacaoONGs.Infra.CrossCutting.Log.Repositories;
 using OpenId3as.DivulgacaoONGs.Infra.CrossCutting.Security;
@@ -97,11 +98,34 @@ namespace OpenId3as.DivulgacaoONGs.Services.Rest.CoreAPI
             })
             .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddApiVersioning(options => options.ApiVersionReader = new HeaderApiVersionReader("api-version"));
+
+            #region Swagger
+
+            _ = services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc(
+                    "v1",
+                    new OpenApiInfo
+                    {
+                        Title = "Divulgação de ONG's",
+                        Version = "v1",
+                        Description = "API Rest desenvolvida em ASPNET Core 2.2",
+                        Contact = new OpenApiContact
+                        {
+                            Name = "Marcelo Ribeiro de Albuquerque",
+                            Url = new Uri("https://github.com/openid3as")
+                        }
+                    });
+                c.CustomSchemaIds(x => x.FullName);
+            });
+
+            #endregion Swagger
+
             services.AddDependencyInjections(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();

@@ -4,19 +4,16 @@ namespace OpenId3as.DivulgacaoONGs.Application.AutoMapper.Config
 {
     public class AutoMapperConfig
     {
-        public static void RegisterMappingsInit()
+        public MapperConfiguration RegisterMappingsInit()
         {
-            //var config = new MapperConfiguration(cfg => {
-            //    cfg.AddProfile(new ViewToDomainModelMappingProfile());
-            //    cfg.AddProfile(new DomainToViewModelMappingProfile());
-            //});
-            //config.CreateMapper();
-            //return config;
-            Mapper.Initialize(cfg =>
+            var config = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new ViewToDomainModelMappingProfile());
                 cfg.AddProfile(new DomainToViewModelMappingProfile());
             });
+
+            config.CreateMapper();
+            return config;
         }
     }
 }

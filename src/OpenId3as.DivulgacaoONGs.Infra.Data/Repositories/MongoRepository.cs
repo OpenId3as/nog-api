@@ -3,7 +3,6 @@ using OpenId3as.DivulgacaoONGs.Domain.Interfaces.Repositories;
 using OpenId3as.DivulgacaoONGs.Infra.Data.Context.Mongo;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace OpenId3as.DivulgacaoONGs.Infra.Data.Repositories
 {

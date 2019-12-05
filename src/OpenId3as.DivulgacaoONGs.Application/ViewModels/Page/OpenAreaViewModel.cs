@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 
 namespace OpenId3as.DivulgacaoONGs.Application.ViewModels.Page
 {

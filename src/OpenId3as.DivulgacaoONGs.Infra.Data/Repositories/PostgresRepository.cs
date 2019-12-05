@@ -11,7 +11,7 @@ namespace OpenId3as.DivulgacaoONGs.Infra.Data.Repositories
     public class PostgresRepository<TEntity> : IPostgresRepository<TEntity> where TEntity : class
     {
         protected NOGContext Db;
-        protected DbSet<TEntity> DbSet;
+        protected Microsoft.EntityFrameworkCore.DbSet<TEntity> DbSet;
 
         public PostgresRepository(NOGContext context)
         {
@@ -37,7 +37,7 @@ namespace OpenId3as.DivulgacaoONGs.Infra.Data.Repositories
 
         public virtual IEnumerable<TEntity> GetAll()
         {
-            //return DbSet.Take(t).Skip(s).ToList();
+            // return DbSet.Take(t).Skip(s).ToList();
             return DbSet.ToList();
         }
 
